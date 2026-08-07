@@ -7,12 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-08-07
+
+### Changed
+- **Renamed the project from `testsmith` to `testquill`.** The name was
+  changed to avoid confusion with [Testsmith.io](https://testsmith.io), a
+  software testing consultancy that has used the Testsmith name since 2018.
+  There is no affiliation between the two.
+
+  Migration:
+  - PyPI package: `testsmith-ai` → `testquill`.
+    Run `pipx uninstall testsmith-ai && pipx install testquill`
+    (or `pip uninstall testsmith-ai && pip install testquill`).
+  - CLI command: `testsmith` → `testquill`.
+  - Python import package: `testsmith` → `testquill`.
+  - Environment variables: `TESTSMITH_PROVIDER`, `TESTSMITH_MODEL`,
+    `TESTSMITH_TEMPERATURE`, and `TESTSMITH_TOP_P` are now
+    `TESTQUILL_PROVIDER`, `TESTQUILL_MODEL`, `TESTQUILL_TEMPERATURE`, and
+    `TESTQUILL_TOP_P`. The old names are no longer read — update your `.env`.
+  - Repository: `github.com/priyankshah217/testsmith` →
+    `github.com/priyankshah217/testquill`. GitHub redirects the old URL, but
+    update your git remote with
+    `git remote set-url origin git@github.com:priyankshah217/testquill.git`.
+
+  No functional changes — this release is the rename only.
+
 ## [0.4.0] - 2026-04-12
 
 ### Added
 - **OpenAI-compatible provider**: supports OpenAI, LiteLLM gateway, Azure
   OpenAI, Ollama, vLLM, and any OpenAI-compatible API. Install with
-  `pip install testsmith-ai[openai]`. Configure via `OPENAI_API_KEY` and
+  `pip install testsmith-ai[openai]` (the package was named `testsmith-ai`
+  at the time of this release; see 0.5.0). Configure via `OPENAI_API_KEY` and
   optional `OPENAI_BASE_URL` for custom endpoints.
 - Auto-detection of provider from model name (gpt-*, o1-*, o3-*, o4-*).
 
@@ -109,7 +135,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   supporting inputs.
 - Provider abstraction with Anthropic Claude and Google Gemini backends,
   auto-detected from environment variables.
-- Pluggable source pipeline (`testsmith/sources/`) with a `Source` protocol
+- Pluggable source pipeline (`testquill/sources/`) with a `Source` protocol
   and ordered registry.
 - Built-in sources:
   - `PdfSource`, `DocxSource`, `TextSource` for local files.

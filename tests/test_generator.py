@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from testsmith.generator import (
+from testquill.generator import (
     _build_judge_prompt,
     _build_output_contract,
     _parse_response,

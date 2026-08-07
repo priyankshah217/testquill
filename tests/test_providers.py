@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from testsmith.providers import _infer_provider_from_model, get_provider
+from testquill.providers import _infer_provider_from_model, get_provider
 
 
 class TestInferProviderFromModel:
@@ -150,20 +150,20 @@ class TestProviderEnvFallbacks:
     def test_model_from_env(self, monkeypatch: pytest.MonkeyPatch):
         monkeypatch.setenv("GEMINI_API_KEY", "fake-key")
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-        monkeypatch.setenv("TESTSMITH_MODEL", "gemini-2.5-flash")
+        monkeypatch.setenv("TESTQUILL_MODEL", "gemini-2.5-flash")
         provider = get_provider()
         assert provider.model == "gemini-2.5-flash"
 
     def test_temperature_from_env(self, monkeypatch: pytest.MonkeyPatch):
         monkeypatch.setenv("GEMINI_API_KEY", "fake-key")
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-        monkeypatch.setenv("TESTSMITH_TEMPERATURE", "0.5")
+        monkeypatch.setenv("TESTQUILL_TEMPERATURE", "0.5")
         provider = get_provider()
         assert provider.temperature == 0.5
 
     def test_invalid_temperature_env_ignored(self, monkeypatch: pytest.MonkeyPatch):
         monkeypatch.setenv("GEMINI_API_KEY", "fake-key")
         monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
-        monkeypatch.setenv("TESTSMITH_TEMPERATURE", "not-a-number")
+        monkeypatch.setenv("TESTQUILL_TEMPERATURE", "not-a-number")
         provider = get_provider()
         assert provider.temperature is None

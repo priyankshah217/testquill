@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from testsmith.sources.base import SourceError
-from testsmith.sources.figma import (
+from testquill.sources.base import SourceError
+from testquill.sources.figma import (
     FigmaSource,
     _is_auto_generated_name,
     _is_qa_relevant_text,

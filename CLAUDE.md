@@ -4,16 +4,16 @@ Guidance for Claude Code when working in this repo.
 
 ## What this project is
 
-`testsmith` is a CLI that generates QA test cases as CSV from a feature
+`testquill` is a CLI that generates QA test cases as CSV from a feature
 description and/or supporting sources (local files, Confluence pages, Figma
 designs), using Anthropic Claude or Google Gemini as the LLM.
 
-Entry point: `testsmith = "testsmith.cli:app"` (defined in `pyproject.toml`).
+Entry point: `testquill = "testquill.cli:app"` (defined in `pyproject.toml`).
 
 ## Architecture
 
 ```
-testsmith/
+testquill/
 ├── cli.py           Typer CLI. Orchestrates: load → (optional) interview → generate → judge → write
 ├── loaders.py       Thin composer. Turns (prompt, [refs]) into one context string
 ├── sources/         Pluggable input pipeline
@@ -74,7 +74,7 @@ testsmith/
 
 ## Adding a new source
 
-1. Create `testsmith/sources/<name>.py` with a class implementing:
+1. Create `testquill/sources/<name>.py` with a class implementing:
    ```python
    class MyNewSource:
        name = "mynew"
@@ -82,11 +82,11 @@ testsmith/
        def load(self, ref: str) -> LoadedDoc: ...
    ```
 2. Raise `SourceError` on any failure — network, auth, parse, empty result.
-3. Register it in `testsmith/sources/registry.py`. URL-based sources go
+3. Register it in `testquill/sources/registry.py`. URL-based sources go
    before file sources.
 4. Smoke-test with:
    ```bash
-   python -c "from testsmith.sources import REGISTRY, load; print([s.name for s in REGISTRY])"
+   python -c "from testquill.sources import REGISTRY, load; print([s.name for s in REGISTRY])"
    ```
 5. Update `README.md`'s supported-sources table and add a setup section
    if the source needs env vars.
@@ -94,12 +94,12 @@ testsmith/
 ## Running locally
 
 ```bash
-cd ~/PythonProjects/testsmith
+cd ~/PythonProjects/testquill
 source .venv/bin/activate
 pip install -e .
 
 # Smoke test
-testsmith -p "Login screen with email + password and social auth"
+testquill -p "Login screen with email + password and social auth"
 ```
 
 ## Environment variables
@@ -110,7 +110,7 @@ testsmith -p "Login screen with email + password and social auth"
 | `GOOGLE_API_KEY` / `GEMINI_API_KEY` | Use Google Gemini |
 | `OPENAI_API_KEY` | Use OpenAI or any OpenAI-compatible API |
 | `OPENAI_BASE_URL` | Custom base URL for OpenAI-compatible APIs (LiteLLM gateway, Azure, Ollama) |
-| `TESTSMITH_PROVIDER` | Force provider (`anthropic`, `gemini`, or `openai`) |
+| `TESTQUILL_PROVIDER` | Force provider (`anthropic`, `gemini`, or `openai`) |
 | `CONFLUENCE_BASE_URL` / `CONFLUENCE_EMAIL` / `CONFLUENCE_API_TOKEN` | Confluence source |
 | `FIGMA_API_TOKEN` | Figma source |
 
@@ -120,7 +120,7 @@ All variables can be set in a `.env` file in the working directory
 ## Things to preserve
 
 - **Single-command Typer app.** There is no `generate` subcommand — the
-  CLI is just `testsmith [OPTIONS]`.
+  CLI is just `testquill [OPTIONS]`.
 - **`-f` accepts both paths and URLs.** Do not split this into two flags;
   the registry dispatches based on the ref's shape.
 - **Provider abstraction.** New LLM providers should implement

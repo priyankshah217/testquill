@@ -6,8 +6,8 @@ from pathlib import Path
 
 import pytest
 
-from testsmith.sources.base import SourceError
-from testsmith.sources.files import DocxSource, PdfSource, TextSource
+from testquill.sources.base import SourceError
+from testquill.sources.files import DocxSource, PdfSource, TextSource
 
 
 class TestTextSource:

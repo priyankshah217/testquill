@@ -1,6 +1,6 @@
 """Build the combined context string from a prompt and a list of references.
 
-Loading logic lives in `testsmith.sources`. This module only composes
+Loading logic lives in `testquill.sources`. This module only composes
 `LoadedDoc`s into the final context passed to the LLM.
 """
 
