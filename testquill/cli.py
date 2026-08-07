@@ -1,4 +1,4 @@
-"""testsmith CLI entrypoint."""
+"""testquill CLI entrypoint."""
 
 from __future__ import annotations
 

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from testsmith.sources import REGISTRY, load
-from testsmith.sources.base import LoadedDoc, SourceError
+from testquill.sources import REGISTRY, load
+from testquill.sources.base import LoadedDoc, SourceError
 
 
 class TestRegistry:

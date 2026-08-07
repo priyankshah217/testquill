@@ -1,4 +1,4 @@
-"""Shared fixtures for testsmith tests."""
+"""Shared fixtures for testquill tests."""
 
 from __future__ import annotations
 

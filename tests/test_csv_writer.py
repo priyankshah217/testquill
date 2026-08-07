@@ -5,7 +5,7 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from testsmith.csv_writer import write_csv
+from testquill.csv_writer import write_csv
 
 
 class TestWriteCsv:

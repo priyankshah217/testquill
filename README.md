@@ -1,12 +1,19 @@
-# testsmith
+# testquill
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
-Forge QA test cases from text, documents, Confluence pages, and Figma designs using LLMs.
+Draft QA test cases from text, documents, Confluence pages, and Figma designs using LLMs.
 
-`testsmith` is a CLI that takes a feature description and/or supporting sources (local files or URLs), sends them to an LLM (Anthropic Claude or Google Gemini), and writes the generated test cases to a CSV file.
+`testquill` is a CLI that takes a feature description and/or supporting sources (local files or URLs), sends them to an LLM (Anthropic Claude or Google Gemini), and writes the generated test cases to a CSV file.
+
+> **Renamed in v0.5.0.** This project was previously called `testsmith`
+> (PyPI: `testsmith-ai`). It was renamed to avoid confusion with
+> [Testsmith.io](https://testsmith.io), an unaffiliated software testing
+> consultancy that has used the Testsmith name since 2018. If you installed
+> the old package, run `pipx uninstall testsmith-ai && pipx install testquill`.
+> See the [CHANGELOG](CHANGELOG.md) for the full migration steps.
 
 ## Requirements
 
@@ -14,11 +21,11 @@ Forge QA test cases from text, documents, Confluence pages, and Figma designs us
 - An API key for one of the supported providers:
   - `ANTHROPIC_API_KEY` for Anthropic Claude
   - `GOOGLE_API_KEY` (or `GEMINI_API_KEY`) for Google Gemini
-  - `OPENAI_API_KEY` for OpenAI or any OpenAI-compatible API (requires `pip install testsmith-ai[openai]`)
+  - `OPENAI_API_KEY` for OpenAI or any OpenAI-compatible API (requires `pip install testquill[openai]`)
 
 ## Configuration
 
-testsmith reads configuration from environment variables and/or a `.env` file in the current directory. Environment variables always take priority.
+testquill reads configuration from environment variables and/or a `.env` file in the current directory. Environment variables always take priority.
 
 ```bash
 cp .env.example .env   # then edit .env with your values
@@ -38,13 +45,13 @@ See [`.env.example`](.env.example) for all available settings.
 # Linux:   python3 -m pip install --user pipx
 # Windows: python -m pip install --user pipx
 
-pipx install testsmith-ai
+pipx install testquill
 ```
 
 To upgrade later:
 
 ```bash
-pipx upgrade testsmith-ai
+pipx upgrade testquill
 ```
 
 ### Via pip (in a virtualenv)
@@ -56,14 +63,14 @@ python3 -m venv .venv && source .venv/bin/activate
 # Windows
 python -m venv .venv && .venv\Scripts\activate
 
-pip install testsmith-ai
+pip install testquill
 ```
 
 ### From source (for development)
 
 ```bash
-git clone https://github.com/priyankshah217/testsmith.git
-cd testsmith
+git clone https://github.com/priyankshah217/testquill.git
+cd testquill
 
 # macOS / Linux
 python3 -m venv .venv && source .venv/bin/activate
@@ -74,12 +81,12 @@ python -m venv .venv && .venv\Scripts\activate
 pip install -e ".[dev]"
 ```
 
-This installs the `testsmith` command on your PATH.
+This installs the `testquill` command on your PATH.
 
 ## Usage
 
 ```bash
-testsmith [OPTIONS]
+testquill [OPTIONS]
 ```
 
 You must provide at least one of `--prompt`, `--file`, or piped stdin.
@@ -115,7 +122,7 @@ You must provide at least one of `--prompt`, `--file`, or piped stdin.
 | Confluence page | `-f https://acme.atlassian.net/wiki/spaces/ENG/pages/12345/Checkout-PRD` |
 | Figma design (text-only) | `-f "https://www.figma.com/design/<fileKey>/<name>?node-id=1-23"` |
 
-Adding new sources (Notion, Jira, Linear, ...) is a single file in `testsmith/sources/` — see `testsmith/sources/base.py` for the `Source` protocol.
+Adding new sources (Notion, Jira, Linear, ...) is a single file in `testquill/sources/` — see `testquill/sources/base.py` for the `Source` protocol.
 
 ### Confluence setup
 
@@ -140,7 +147,7 @@ FIGMA_API_TOKEN=<token from figma.com/settings>
 First install the optional OpenAI dependency:
 
 ```bash
-pip install testsmith-ai[openai]
+pip install testquill[openai]
 ```
 
 Set in your `.env` file or as environment variables:
@@ -153,8 +160,8 @@ OPENAI_BASE_URL=https://your-litellm-gateway.internal/v1  # optional, for custom
 This works with any OpenAI-compatible API: OpenAI, LiteLLM gateway, Azure OpenAI, Ollama, vLLM, etc. Use `--model` to specify the model name your gateway exposes:
 
 ```bash
-testsmith --provider openai --model gpt-4o -p "Login flow"
-testsmith --provider openai --model company/internal-llm -p "Login flow"  # custom gateway model
+testquill --provider openai --model gpt-4o -p "Login flow"
+testquill --provider openai --model company/internal-llm -p "Login flow"  # custom gateway model
 ```
 
 Figma support is **text-only** in v1: frame/component names become headings, text layers become body text, and component descriptions are preserved. Purely visual nodes (vectors, rectangles, etc.) are skipped. If the URL contains a `node-id`, only that subtree is fetched; otherwise the whole file is loaded. **Tip:** right-click a frame in Figma → Copy link to get a URL with the right `node-id`.
@@ -164,31 +171,31 @@ Figma support is **text-only** in v1: frame/component names become headings, tex
 Generate from an inline prompt (LLM picks the filename):
 
 ```bash
-testsmith -p "Login screen with email + password, forgot password link, and social login"
+testquill -p "Login screen with email + password, forgot password link, and social login"
 ```
 
 Generate from documents:
 
 ```bash
-testsmith -f specs/checkout.pdf -f specs/payment.docx
+testquill -f specs/checkout.pdf -f specs/payment.docx
 ```
 
 Generate from a Confluence page:
 
 ```bash
-testsmith -f https://acme.atlassian.net/wiki/spaces/ENG/pages/12345/Checkout-PRD
+testquill -f https://acme.atlassian.net/wiki/spaces/ENG/pages/12345/Checkout-PRD
 ```
 
 Generate from a Figma design (quote the URL — the `?` will be interpreted by your shell otherwise):
 
 ```bash
-testsmith -f "https://www.figma.com/design/ABC123/Checkout?node-id=42-1337"
+testquill -f "https://www.figma.com/design/ABC123/Checkout?node-id=42-1337"
 ```
 
 Mix a prompt with supporting files, Confluence pages, and Figma designs:
 
 ```bash
-testsmith -p "Focus on edge cases" \
+testquill -p "Focus on edge cases" \
   -f "https://www.figma.com/design/ABC123/Checkout?node-id=42-1337" \
   -f https://acme.atlassian.net/wiki/spaces/ENG/pages/12345/PRD \
   -f specs/wireframes.pdf
@@ -197,49 +204,49 @@ testsmith -p "Focus on edge cases" \
 Pipe text via stdin:
 
 ```bash
-cat feature.md | testsmith
+cat feature.md | testquill
 ```
 
 Pick a provider explicitly:
 
 ```bash
-testsmith -p "Signup flow" --provider anthropic
+testquill -p "Signup flow" --provider anthropic
 ```
 
 Interactive mode (LLM asks clarifying questions only when genuinely ambiguous):
 
 ```bash
-testsmith -i -p "Checkout flow with guest and returning users"
+testquill -i -p "Checkout flow with guest and returning users"
 ```
 
 Generate BDD-style test cases (Given/When/Then, business-focused):
 
 ```bash
-testsmith -p "Subscription renewal flow" --format bdd
+testquill -p "Subscription renewal flow" --format bdd
 ```
 
 Use a specific model with custom temperature:
 
 ```bash
-testsmith -p "Signup flow" -m claude-sonnet-4-6 -t 0.3
+testquill -p "Signup flow" -m claude-sonnet-4-6 -t 0.3
 ```
 
 Use a custom system prompt from a file:
 
 ```bash
-testsmith -f spec.pdf --system @prompts/qa_system.txt
+testquill -f spec.pdf --system @prompts/qa_system.txt
 ```
 
 Append to the default system prompt instead of replacing it:
 
 ```bash
-testsmith -f spec.pdf --system "Focus on accessibility test cases." --append-system
+testquill -f spec.pdf --system "Focus on accessibility test cases." --append-system
 ```
 
 Force an explicit output filename:
 
 ```bash
-testsmith -p "Password reset flow" -o reset.csv
+testquill -p "Password reset flow" -o reset.csv
 ```
 
 ## Output
@@ -263,7 +270,7 @@ BDD mode enforces **business-focused language** — steps describe domain intent
 
 ### Quality enforcement
 
-testsmith automatically validates generated test cases and fixes issues:
+testquill automatically validates generated test cases and fixes issues:
 
 1. **Code-level check** — scans output for hedging language ("may", "likely", "e.g."), non-specific steps, precondition/step duplication, and duplicate test cases.
 2. **LLM-as-judge** — if warnings are found, the output is sent to a second LLM call with a QA Reviewer persona that rewrites only the flagged fields with specific, deterministic values.
@@ -273,7 +280,7 @@ This two-layer approach (regex + LLM judge) catches issues that prompt-level sel
 
 ## Claude Code skill
 
-Testsmith ships with a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) so Claude can run testsmith for you when you ask for test cases.
+TestQuill ships with a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) so Claude can run testquill for you when you ask for test cases.
 
 ### Install the skill
 
@@ -281,25 +288,25 @@ Copy the bundled skill to your Claude Code skills directory:
 
 ```bash
 # macOS / Linux
-cp -r skills/testsmith ~/.claude/skills/
+cp -r skills/testquill ~/.claude/skills/
 
 # Windows (PowerShell)
-Copy-Item -Recurse skills\testsmith $env:USERPROFILE\.claude\skills\
+Copy-Item -Recurse skills\testquill $env:USERPROFILE\.claude\skills\
 ```
 
 Or create a symlink so it stays in sync with the repo:
 
 ```bash
-ln -s "$(pwd)/skills/testsmith" ~/.claude/skills/testsmith
+ln -s "$(pwd)/skills/testquill" ~/.claude/skills/testquill
 ```
 
-Once installed, just ask Claude Code: *"generate test cases for the login screen"* — it will invoke testsmith automatically.
+Once installed, just ask Claude Code: *"generate test cases for the login screen"* — it will invoke testquill automatically.
 
 ## Contributing
 
 ```bash
-git clone https://github.com/priyankshah217/testsmith.git
-cd testsmith
+git clone https://github.com/priyankshah217/testquill.git
+cd testquill
 python3 -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest tests/ -v

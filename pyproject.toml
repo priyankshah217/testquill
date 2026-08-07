@@ -1,7 +1,7 @@
 [project]
-name = "testsmith-ai"
-version = "0.4.0"
-description = "Forge QA test cases from text, documents, Confluence pages, and Figma designs using LLMs"
+name = "testquill"
+version = "0.5.0"
+description = "Draft QA test cases from text, documents, Confluence pages, and Figma designs using LLMs"
 readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.11"
@@ -42,17 +42,17 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/priyankshah217/testsmith"
-Repository = "https://github.com/priyankshah217/testsmith"
-Issues = "https://github.com/priyankshah217/testsmith/issues"
-Changelog = "https://github.com/priyankshah217/testsmith/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/priyankshah217/testquill"
+Repository = "https://github.com/priyankshah217/testquill"
+Issues = "https://github.com/priyankshah217/testquill/issues"
+Changelog = "https://github.com/priyankshah217/testquill/blob/main/CHANGELOG.md"
 
 [project.scripts]
-testsmith = "testsmith.cli:app"
+testquill = "testquill.cli:app"
 
 [build-system]
 requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = ["testsmith*"]
+include = ["testquill*"]

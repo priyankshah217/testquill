@@ -1,4 +1,4 @@
-"""Input sources for testsmith.
+"""Input sources for testquill.
 
 Each source knows how to recognize a reference (file path, URL, etc.) and
 load it into a `LoadedDoc`. New inputs (Confluence, Figma, Notion, ...) are

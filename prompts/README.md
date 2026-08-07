@@ -1,19 +1,19 @@
 # Sample Prompts
 
-Testsmith ships with a solid default system prompt that enforces quality rules
+TestQuill ships with a solid default system prompt that enforces quality rules
 (deterministic expected results, no vague language, uniqueness checks, etc.).
 
 For more control, use these sample prompts as starting points via `-s` and `-u`:
 
 ```bash
 # Use a sample system prompt (replaces the default persona, keeps output contract)
-testsmith -s @prompts/system_advanced.md -p "Login with email and password"
+testquill -s @prompts/system_advanced.md -p "Login with email and password"
 
 # Use a sample system prompt in append mode (adds to the default)
-testsmith -s @prompts/system_mobile_app.md --append-system -p "Login screen"
+testquill -s @prompts/system_mobile_app.md --append-system -p "Login screen"
 
 # Combine system + user template
-testsmith -s @prompts/system_advanced.md -u @prompts/user_with_checklist.md -f spec.pdf
+testquill -s @prompts/system_advanced.md -u @prompts/user_with_checklist.md -f spec.pdf
 ```
 
 ## Files

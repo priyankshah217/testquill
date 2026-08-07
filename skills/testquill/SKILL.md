@@ -1,20 +1,20 @@
 ---
-name: testsmith
-description: Use this skill when the user asks to generate, draft, or update QA test cases from a PRD, RFC, design doc, Figma link, Confluence page, feature description, or any local spec file (PDF/DOCX/MD/TXT). Knows the testsmith CLI flags, prompt conventions, and output format.
+name: testquill
+description: Use this skill when the user asks to generate, draft, or update QA test cases from a PRD, RFC, design doc, Figma link, Confluence page, feature description, or any local spec file (PDF/DOCX/MD/TXT). Knows the testquill CLI flags, prompt conventions, and output format.
 ---
 
-# Testsmith helper
+# TestQuill helper
 
-Testsmith is a CLI that generates QA test cases (CSV) from plain text, document inputs, Confluence pages, and Figma designs using an LLM (Anthropic or Gemini, auto-detected from env).
+TestQuill is a CLI that generates QA test cases (CSV) from plain text, document inputs, Confluence pages, and Figma designs using an LLM (Anthropic or Gemini, auto-detected from env).
 
-- **Repo:** https://github.com/priyankshah217/testsmith
-- **Install:** `pipx install testsmith-ai`
-- **Providers:** auto-detects `ANTHROPIC_API_KEY` or `GEMINI_API_KEY`. Override with `--provider anthropic|gemini` or env var `TESTSMITH_PROVIDER`.
+- **Repo:** https://github.com/priyankshah217/testquill
+- **Install:** `pipx install testquill`
+- **Providers:** auto-detects `ANTHROPIC_API_KEY` or `GEMINI_API_KEY`. Override with `--provider anthropic|gemini` or env var `TESTQUILL_PROVIDER`.
 
 ## CLI surface
 
 ```
-testsmith [OPTIONS]
+testquill [OPTIONS]
 
   -p, --prompt TEXT          Inline feature description
   -f, --file REF             Local file (PDF/DOCX/MD/TXT) OR URL
@@ -56,7 +56,7 @@ Inputs can be combined freely: `-p "..." -f spec.pdf -f https://acme.atlassian.n
 
 Copy `.env.example` to `.env` and fill in your values.
 
-Figma extraction is **text-only** in v1: frame/component names become headings, text layers become body text, component descriptions are preserved. Purely visual nodes are skipped. Prefer passing a URL with `node-id` (right-click a frame → Copy link) so testsmith fetches just that subtree instead of the whole file.
+Figma extraction is **text-only** in v1: frame/component names become headings, text layers become body text, component descriptions are preserved. Purely visual nodes are skipped. Prefer passing a URL with `node-id` (right-click a frame → Copy link) so testquill fetches just that subtree instead of the whole file.
 
 ## Output CSV schema
 
@@ -72,12 +72,12 @@ Columns: `ID, Title, Preconditions, Steps, Expected Result, Priority, Type`
 
 When the user asks for test cases:
 
-1. **Collect context.** Gather plain-text description, file paths, or URLs. Testsmith natively accepts plain text (`-p`), local files, Confluence URLs, and Figma URLs (all via `-f`).
+1. **Collect context.** Gather plain-text description, file paths, or URLs. TestQuill natively accepts plain text (`-p`), local files, Confluence URLs, and Figma URLs (all via `-f`).
 
 2. **Pick invocation style.** `-o` is optional — omit it to let the LLM name the file.
-   - Quick one-liner: `testsmith -p "<feature description>"`
-   - From a doc: `testsmith -f <path>`
-   - Mixed: `testsmith -p "<context>" -f <path1> -f <path2>`
+   - Quick one-liner: `testquill -p "<feature description>"`
+   - From a doc: `testquill -f <path>`
+   - Mixed: `testquill -p "<context>" -f <path1> -f <path2>`
    - Force a filename: add `-o <out>.csv` when the user specifies one.
 
 3. **Step format.** If the user asks for BDD, Gherkin, or Given/When/Then style test cases, add `--format bdd`. BDD mode produces business-focused steps (no UI-interaction words like click, tap, navigate). Default is `--format steps` (numbered).
@@ -86,36 +86,36 @@ When the user asks for test cases:
 
 5. **Run it.** Execute the command via Bash from the user's shell (ANTHROPIC_API_KEY / GEMINI_API_KEY are expected to be set in the environment).
 
-6. **Report.** After the command succeeds, tell the user the CSV path and how many rows were generated (testsmith prints this). Offer to open/preview the first few rows.
+6. **Report.** After the command succeeds, tell the user the CSV path and how many rows were generated (testquill prints this). Offer to open/preview the first few rows.
 
 ## Examples
 
 ```bash
 # Simple prompt (LLM picks the filename)
-testsmith -p "Login page with email+password, forgot password link, rate limiting"
+testquill -p "Login page with email+password, forgot password link, rate limiting"
 
 # From a PRD (LLM picks the filename)
-testsmith -f ~/docs/checkout-prd.pdf
+testquill -f ~/docs/checkout-prd.pdf
 
 # Focused negative cases
-testsmith -f spec.pdf --append-system "Focus heavily on payment failure paths and idempotency."
+testquill -f spec.pdf --append-system "Focus heavily on payment failure paths and idempotency."
 
 # Explicit filename
-testsmith -p "Password reset flow" -o reset.csv
+testquill -p "Password reset flow" -o reset.csv
 
 # Force provider
-testsmith --provider gemini -p "Password reset flow"
+testquill --provider gemini -p "Password reset flow"
 
 # BDD format (business-focused Given/When/Then steps)
-testsmith -p "Subscription renewal flow" --format bdd
+testquill -p "Subscription renewal flow" --format bdd
 
 # Specific model and temperature
-testsmith -p "Signup flow" -m claude-sonnet-4-6 -t 0.3
+testquill -p "Signup flow" -m claude-sonnet-4-6 -t 0.3
 ```
 
 ## Gotchas
 
 - If both API keys are set, Anthropic wins by default. Pass `--provider gemini` to override.
-- Large PDFs can blow past the model's context window. If that happens, split the file or pre-summarize before passing it to testsmith.
-- If `testsmith` is not on PATH, install with `pipx install testsmith-ai` or run `pipx ensurepath`.
-- testsmith loads `.env` from the current directory automatically. Env vars always override `.env` values.
+- Large PDFs can blow past the model's context window. If that happens, split the file or pre-summarize before passing it to testquill.
+- If `testquill` is not on PATH, install with `pipx install testquill` or run `pipx ensurepath`.
+- testquill loads `.env` from the current directory automatically. Env vars always override `.env` values.

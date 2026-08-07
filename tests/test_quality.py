@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from testsmith.quality import check_quality
+from testquill.quality import check_quality
 
 
 def _row(**overrides) -> dict:

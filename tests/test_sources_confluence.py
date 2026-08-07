@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from testsmith.sources.base import SourceError
-from testsmith.sources.confluence import (
+from testquill.sources.base import SourceError
+from testquill.sources.confluence import (
     ConfluenceSource,
     _html_to_text,
     _PAGE_ID_RE,

@@ -149,24 +149,24 @@ def get_provider(
     """Pick a provider and configure it.
 
     Resolution order:
-      Provider: explicit arg > inferred from model > env TESTSMITH_PROVIDER > first available key.
-      Model: explicit arg > env TESTSMITH_MODEL > provider default.
-      Temperature: explicit arg > env TESTSMITH_TEMPERATURE > provider default.
-      Top-p: explicit arg > env TESTSMITH_TOP_P > provider default.
+      Provider: explicit arg > inferred from model > env TESTQUILL_PROVIDER > first available key.
+      Model: explicit arg > env TESTQUILL_MODEL > provider default.
+      Temperature: explicit arg > env TESTQUILL_TEMPERATURE > provider default.
+      Top-p: explicit arg > env TESTQUILL_TOP_P > provider default.
     """
     anthropic_key = os.environ.get("ANTHROPIC_API_KEY")
     gemini_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
     openai_key = os.environ.get("OPENAI_API_KEY")
     openai_base_url = os.environ.get("OPENAI_BASE_URL")
 
-    model = model or os.environ.get("TESTSMITH_MODEL") or None
+    model = model or os.environ.get("TESTQUILL_MODEL") or None
     temperature = (
-        temperature if temperature is not None else _env_float("TESTSMITH_TEMPERATURE")
+        temperature if temperature is not None else _env_float("TESTQUILL_TEMPERATURE")
     )
-    top_p = top_p if top_p is not None else _env_float("TESTSMITH_TOP_P")
+    top_p = top_p if top_p is not None else _env_float("TESTQUILL_TOP_P")
 
     # Resolve provider: explicit > inferred from model > env > auto-detect from keys.
-    explicit = (preferred or os.environ.get("TESTSMITH_PROVIDER") or "").lower().strip()
+    explicit = (preferred or os.environ.get("TESTQUILL_PROVIDER") or "").lower().strip()
     inferred = _infer_provider_from_model(model) if model else None
 
     if explicit and inferred and explicit != inferred:
