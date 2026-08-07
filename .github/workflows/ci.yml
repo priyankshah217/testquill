@@ -41,8 +41,10 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Pinned so a new ruff release cannot fail CI on unrelated PRs.
+      # Bump deliberately, fixing any new lint findings in the same commit.
       - name: Install ruff
-        run: pip install ruff
+        run: pip install ruff==0.15.9
 
       - name: Ruff check
         run: ruff check testquill/ tests/
