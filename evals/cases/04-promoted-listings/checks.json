@@ -1,0 +1,175 @@
+{
+  "reference_checks": [
+    {
+      "id": "R01",
+      "source_tc": "TC-001",
+      "check": "When a seller with at least 60 coins opens their Available listing in an eligible category, taps 'Promote', selects '3-day Bump (30 coins)' or '7-day Bump (60 coins)', and confirms purchase, the bump's price (30 or 60 coins respectively) is deducted immediately from the seller's wallet.",
+      "priority": "P0"
+    },
+    {
+      "id": "R02",
+      "source_tc": "TC-001",
+      "check": "After a seller with at least 60 coins purchases either '3-day Bump (30 coins)' or '7-day Bump (60 coins)' on an Available listing in an eligible category, the listing page displays the remaining promotion time.",
+      "priority": "P0"
+    },
+    {
+      "id": "R03",
+      "source_tc": "TC-001",
+      "check": "After purchasing either '3-day Bump (30 coins)' or '7-day Bump (60 coins)' on an Available listing in an eligible category, the listing appears in the top 3 search positions for its category when viewed as a buyer.",
+      "priority": "P0"
+    },
+    {
+      "id": "R04",
+      "source_tc": "TC-001",
+      "check": "After purchasing either '3-day Bump (30 coins)' or '7-day Bump (60 coins)' on an Available listing in an eligible category, the listing displays a 'Promoted' badge in category search results when viewed as a buyer.",
+      "priority": "P0"
+    },
+    {
+      "id": "R05",
+      "source_tc": "TC-002",
+      "check": "When a seller with 20 coins taps 'Promote' on an Available listing and selects '3-day Bump (30 coins)' or '7-day Bump (60 coins)', the purchase is blocked.",
+      "priority": "P1"
+    },
+    {
+      "id": "R06",
+      "source_tc": "TC-002",
+      "check": "When a seller with 20 coins taps 'Promote' on an Available listing and selects '3-day Bump (30 coins)' or '7-day Bump (60 coins)', the seller is prompted to top up coins.",
+      "priority": "P1"
+    },
+    {
+      "id": "R07",
+      "source_tc": "TC-003",
+      "check": "When a seller navigates to a Reserved listing and checks the 'Promote' option, the Reserved listing cannot be promoted.",
+      "priority": "P1"
+    },
+    {
+      "id": "R08",
+      "source_tc": "TC-003",
+      "check": "When a seller navigates to a Sold listing and checks the 'Promote' option, the Sold listing cannot be promoted.",
+      "priority": "P1"
+    },
+    {
+      "id": "R09",
+      "source_tc": "TC-003",
+      "check": "When a seller navigates to an Available listing in a Trust & Safety restricted category and checks the 'Promote' option, the restricted-category listing cannot be promoted.",
+      "priority": "P1"
+    },
+    {
+      "id": "R10",
+      "source_tc": "TC-004",
+      "check": "When time advances past an active 3-day Bump promotion duration, the 'Promoted' label is removed from the listing in search results.",
+      "priority": "P1"
+    },
+    {
+      "id": "R11",
+      "source_tc": "TC-004",
+      "check": "When time advances past an active 3-day Bump promotion duration, the listing returns to organic search ranking in search results.",
+      "priority": "P1"
+    },
+    {
+      "id": "R12",
+      "source_tc": "TC-004",
+      "check": "When the seller views the listing stats card on their listing page after a 3-day Bump expires, it compares views and chats during the 3-day promotion against the prior 3-day period.",
+      "priority": "P1"
+    }
+  ],
+  "checklist_items": [
+    {
+      "id": "C01",
+      "item": "Promote entry point is available on the seller's own listing."
+    },
+    {
+      "id": "C02",
+      "item": "3-day Bump package is available for 30 coins."
+    },
+    {
+      "id": "C03",
+      "item": "7-day Bump package is available for 60 coins."
+    },
+    {
+      "id": "C04",
+      "item": "Coins are deducted immediately upon purchasing a promotion package."
+    },
+    {
+      "id": "C05",
+      "item": "Insufficient coin balance triggers a top-up prompt when attempting to promote."
+    },
+    {
+      "id": "C06",
+      "item": "Promoted listing appears in the top 3 positions of its category's search results."
+    },
+    {
+      "id": "C07",
+      "item": "Promoted listing rotates with other promoted listings in the top 3 positions of its category's search results."
+    },
+    {
+      "id": "C08",
+      "item": "'Promoted' label is shown on the listing card in search results."
+    },
+    {
+      "id": "C09",
+      "item": "Time remaining on the active promotion is visible to the seller on their listing page."
+    },
+    {
+      "id": "C10",
+      "item": "On promotion expiry, the listing returns to normal search ranking."
+    },
+    {
+      "id": "C11",
+      "item": "On promotion expiry, the 'Promoted' label is removed from the listing card."
+    },
+    {
+      "id": "C12",
+      "item": "Only Available listings can be promoted (non-Available listings are blocked)."
+    },
+    {
+      "id": "C13",
+      "item": "Listings in restricted categories (Trust & Safety list) cannot be promoted."
+    },
+    {
+      "id": "C14",
+      "item": "Stats card displays views and chats during the promotion period compared to the equal-length prior period."
+    }
+  ],
+  "traps": [
+    {
+      "id": "T01",
+      "trap": "Asserting a specific refund policy when a promoted listing is sold, deleted, or reported mid-promotion (e.g., asserting that coins are refunded when the listing is sold during promotion)."
+    },
+    {
+      "id": "T02",
+      "trap": "Asserting a specific rotation capacity or limit on how many promoted listings share the top 3 search positions before rotation kicks in."
+    },
+    {
+      "id": "T03",
+      "trap": "Asserting a specific behaviour for re-promoting or stacking a second bump while a promotion is active (e.g., asserting that buying a second bump extends the duration, queues, or is blocked)."
+    },
+    {
+      "id": "T04",
+      "trap": "Asserting whether an active promotion stops or continues when a promoted listing's status changes to Sold or Reserved mid-promotion."
+    },
+    {
+      "id": "T05",
+      "trap": "Asserting specific ranking or display behaviour for promoted listings in keyword search results (beyond category search results)."
+    },
+    {
+      "id": "T06",
+      "trap": "Asserting a specific exact end-time or timezone rule for promotion duration (e.g., asserting that 3 days equals exactly 72 hours from purchase or ends at midnight)."
+    },
+    {
+      "id": "T07",
+      "trap": "Asserting whether the promotion purchase resumes automatically or requires manual restart after the seller completes a coin top-up."
+    },
+    {
+      "id": "T08",
+      "trap": "Asserting that the seller receives notifications on promotion start or end (e.g., asserting that the seller receives a notification when the promotion ends)."
+    }
+  ],
+  "_meta": {
+    "judge_provider": "gemini",
+    "judge_model": "gemini-4-neon",
+    "attempts": 1,
+    "seconds": 52.0,
+    "note": "Generated by `judge.py prepare`. Review by hand."
+  }
+}

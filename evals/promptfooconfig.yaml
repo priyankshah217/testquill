@@ -1,0 +1,36 @@
+# testquill eval suite. Run via evals/run.sh (sets the Python interpreter,
+# run id, repeats and output path), not with a bare `promptfoo eval`.
+description: testquill test-case quality
+
+# testquill builds its own prompts; the promptfoo prompt only carries the case id.
+prompts:
+  - "{{case}}"
+
+providers:
+  - id: file://provider.py
+    label: default-prompt
+    config: {}
+  # To compare a change, add a second provider, e.g.:
+  # - id: file://provider.py
+  #   label: advanced-prompt
+  #   config:
+  #     system_prompt_file: prompts/system_advanced.md
+
+defaultTest:
+  assert:
+    - type: python
+      value: file://promptfoo_assert.py
+
+tests:
+  - description: 01 mark as sold (one-paragraph prompt)
+    vars: { case: 01-mark-as-sold, input_mode: prompt }
+  - description: 02 make an offer (baseline PRD)
+    vars: { case: 02-make-offer }
+  - description: 03 listing validation (dense rules table)
+    vars: { case: 03-listing-validation }
+  - description: 04 promoted listings (gaps and TBDs)
+    vars: { case: 04-promoted-listings }
+  - description: 05 guest checkout (planted contradiction)
+    vars: { case: 05-guest-checkout }
+  - description: 06 search filters (interdependent controls)
+    vars: { case: 06-search-filters }

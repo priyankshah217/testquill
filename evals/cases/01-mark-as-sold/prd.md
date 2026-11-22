@@ -1,0 +1,1 @@
+Sellers need a way to mark a listing as sold from the listing page. Once marked sold, the listing should stop showing up in search, and buyers who already had a chat open about it should see a "Sold" badge. The seller can undo it if the deal falls through.

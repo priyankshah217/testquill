@@ -1,0 +1,14 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,End-to-end Guest Checkout flow for an eligible delivery listing (<= $300),"Logged-out visitor views a fixed-price, delivery-enabled listing priced at $100 with $15 delivery fee (Total $115).","1. Tap 'Buy now'.
+2. Select 'Continue as guest'.
+3. Enter valid email, full name, phone, and delivery address.
+4. Enter valid Visa/Mastercard details, review order summary ($100 + $15 = $115), and tap 'Pay'.
+5. Complete 3-D Secure verification.","Order succeeds, confirmation screen shows order number and optional 'Create account' prompt pre-filled with email, confirmation email with unauthenticated 'Track order' link is sent, listing becomes 'Sold', and seller sees order from 'Guest buyer' + entered name.",P0,End-to-End,"Guest Checkout - User Flow & Post-Purchase (§3, §5, §6)"
+TC-002,Guest Checkout eligibility and total cap (> $300 hides 'Continue as guest'),"Listings exist: (A) Delivery + Fixed price, total $301 ($290 + $11 fee); (B) Meetup-only listing ($50); (C) Listing allowing offers ($50).","1. As a logged-out visitor, tap 'Buy now' on Listing A ($301 total).
+2. Check checkout options on Listing B (Meetup-only) and Listing C (Offers enabled).","On Listing A (total > $300), 'Continue as guest' is hidden and only 'Log in' is displayed. Meetup-only and offer-based listings do not offer Guest Checkout.",P0,Boundary/Validation,"Guest Checkout - Scope & Cap (§2, §4) — CONFLICT with §1 ($500)"
+TC-003,Guest Checkout rate limit: 4th order within 24 hours for the same email is blocked,A specific email address has already completed 3 guest orders within the last 24 hours.,"1. As a guest, attempt to place a 4th order using the same email address.",4th order attempt is blocked with message: 'You've reached the guest order limit. Log in or create an account to continue.',P1,Boundary/Validation,Guest Checkout - Rate Limit (§4)
+TC-004,Failed 3-D Secure card challenge prevents order creation,Guest is on the payment step of an eligible delivery listing.,"1. Enter card details and tap 'Pay'.
+2. Fail or cancel the 3-D Secure authentication challenge.","Error 'Payment could not be verified. Try another card.' is displayed, no order is created, and listing remains 'Available'.",P0,Negative,Guest Checkout - 3DS Failure (§4)
+TC-005,Post-purchase account creation links guest order and unauthenticated Track Order link works,Guest just completed an order with email 'guest@example.com'.,"1. Click the 'Track order' link in the confirmation email in an incognito browser.
+2. On the post-purchase screen, complete the pre-filled 'Create account' flow for 'guest@example.com'.
+3. View Order History in the newly created account.",'Track order' link opens the order's tracking page without requiring login; newly created account automatically shows the guest order linked in Order History.,P1,End-to-End,Guest Checkout - Post-Purchase (§5)

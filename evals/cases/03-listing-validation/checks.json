@@ -1,0 +1,409 @@
+{
+  "reference_checks": [
+    {
+      "id": "R01",
+      "source_tc": "TC-001",
+      "check": "Filling all required and optional fields with valid inputs (2 JPG/PNG photos under 10 MB, title 'Vintage Mechanical Keyboard', leaf category 'Electronics > Keyboards', condition 'Like new', price 150, valid description without phone numbers, Meetup with dropdown location, and Delivery with fee 10) enables the 'List it' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R02",
+      "source_tc": "TC-001",
+      "check": "Clicking 'List it' with all valid required and optional fields filled creates and publishes the listing with all entered attributes.",
+      "priority": "P0"
+    },
+    {
+      "id": "R03",
+      "source_tc": "TC-002",
+      "check": "Having 0 photos uploaded displays the error message for missing photos ('Add at least 1 photo').",
+      "priority": "P0"
+    },
+    {
+      "id": "R04",
+      "source_tc": "TC-002",
+      "check": "Attempting to upload an unsupported photo file type (GIF or WEBP) displays 'Only JPG, PNG or HEIC files are supported'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R05",
+      "source_tc": "TC-002",
+      "check": "Attempting to upload an 11 MB JPG photo displays 'Each photo must be under 10 MB'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R06",
+      "source_tc": "TC-002",
+      "check": "Uploading 10 valid HEIC, PNG, or JPG photos after prior rejected uploads succeeds because rejected files do not count toward the 10-photo limit.",
+      "priority": "P0"
+    },
+    {
+      "id": "R07",
+      "source_tc": "TC-002",
+      "check": "Attempting to upload an 11th valid photo when 10 valid photos are already uploaded displays 'You can add up to 10 photos'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R08",
+      "source_tc": "TC-003",
+      "check": "Entering '   abc   ' (3 characters after trimming whitespace) in Title and blurring displays 'Title must be 5\u201380 characters'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R09",
+      "source_tc": "TC-003",
+      "check": "Entering an 81-character string in Title and blurring displays 'Title must be 5\u201380 characters'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R10",
+      "source_tc": "TC-003",
+      "check": "Entering 'Gooooood phone' (6 consecutive 'o's) in Title and blurring displays 'Title can't repeat the same character more than 3 times in a row'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R11",
+      "source_tc": "TC-003",
+      "check": "Entering 'Goood phone' (3 consecutive 'o's) in Title and blurring passes validation.",
+      "priority": "P1"
+    },
+    {
+      "id": "R12",
+      "source_tc": "TC-004",
+      "check": "Selecting a parent category that has subcategories and blurring displays 'Choose a more specific category'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R13",
+      "source_tc": "TC-004",
+      "check": "Selecting a valid leaf category clears the category validation error.",
+      "priority": "P1"
+    },
+    {
+      "id": "R14",
+      "source_tc": "TC-004",
+      "check": "Switching from one valid leaf category to a different valid leaf category preserves previously entered Title, Price, Photos, and other fields.",
+      "priority": "P1"
+    },
+    {
+      "id": "R15",
+      "source_tc": "TC-005",
+      "check": "Entering 0 in Price is accepted and displays as 'Free' when previewed or published.",
+      "priority": "P1"
+    },
+    {
+      "id": "R16",
+      "source_tc": "TC-005",
+      "check": "Entering -1 in Price displays 'Enter a price between 0 and 9,999,999'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R17",
+      "source_tc": "TC-005",
+      "check": "Entering a decimal value (10.99) in Price displays 'Enter a price between 0 and 9,999,999'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R18",
+      "source_tc": "TC-005",
+      "check": "Entering 10000000 in Price displays 'Enter a price between 0 and 9,999,999'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R19",
+      "source_tc": "TC-006",
+      "check": "Entering 'Model 1234567' (7 digits) in Description is allowed without error.",
+      "priority": "P0"
+    },
+    {
+      "id": "R20",
+      "source_tc": "TC-006",
+      "check": "Entering 'Call me at 9123 4567' (8 digits separated by a space) in Description displays 'For your safety, don't include phone numbers in the description'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R21",
+      "source_tc": "TC-006",
+      "check": "Entering '9123-4567' (8 digits separated by a dash) in Description displays 'For your safety, don't include phone numbers in the description'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R22",
+      "source_tc": "TC-006",
+      "check": "Entering 4,001 characters in Description displays 'Description can be up to 4,000 characters'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R23",
+      "source_tc": "TC-007",
+      "check": "Leaving both Meetup and Delivery unchecked displays 'Choose at least one deal method'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R24",
+      "source_tc": "TC-007",
+      "check": "Checking Meetup and typing free text without selecting from search results displays 'Pick a meetup location from the list'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R25",
+      "source_tc": "TC-007",
+      "check": "Selecting a valid Meetup location and then unchecking Meetup clears and hides the Meetup location field (remaining cleared when Meetup is re-checked).",
+      "priority": "P1"
+    },
+    {
+      "id": "R26",
+      "source_tc": "TC-007",
+      "check": "Checking Delivery and entering 501 displays 'Delivery fee must be between 0 and 500'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R27",
+      "source_tc": "TC-007",
+      "check": "Entering a valid Delivery fee (50) and then unchecking Delivery clears and hides the Delivery fee field.",
+      "priority": "P1"
+    },
+    {
+      "id": "R28",
+      "source_tc": "TC-008",
+      "check": "Sending a direct POST request to the Create Listing API bypassing UI checks with a 4-character title is rejected by the server with the exact error message from the spec ('Title must be 5\u201380 characters').",
+      "priority": "P0"
+    },
+    {
+      "id": "R29",
+      "source_tc": "TC-008",
+      "check": "Sending a direct POST request to the Create Listing API bypassing UI checks with a phone number in the description is rejected by the server with the exact error message from the spec ('For your safety, don't include phone numbers in the description').",
+      "priority": "P0"
+    },
+    {
+      "id": "R30",
+      "source_tc": "TC-008",
+      "check": "Sending a direct POST request to the Create Listing API bypassing UI checks with a non-leaf category is rejected by the server with the exact error message from the spec ('Choose a more specific category').",
+      "priority": "P0"
+    },
+    {
+      "id": "R31",
+      "source_tc": "TC-008",
+      "check": "Sending a direct POST request to the Create Listing API bypassing UI checks with a delivery fee of 600 is rejected by the server with the exact error message from the spec ('Delivery fee must be between 0 and 500').",
+      "priority": "P0"
+    }
+  ],
+  "checklist_items": [
+    {
+      "id": "C01",
+      "item": "Photos count boundary: 0 photos rejected."
+    },
+    {
+      "id": "C02",
+      "item": "Photos count boundary: 1 photo accepted."
+    },
+    {
+      "id": "C03",
+      "item": "Photos count boundary: 10 photos accepted."
+    },
+    {
+      "id": "C04",
+      "item": "Photos count boundary: 11 photos rejected."
+    },
+    {
+      "id": "C05",
+      "item": "Photos format: JPG accepted."
+    },
+    {
+      "id": "C06",
+      "item": "Photos format: PNG accepted."
+    },
+    {
+      "id": "C07",
+      "item": "Photos format: HEIC accepted."
+    },
+    {
+      "id": "C08",
+      "item": "Photos format: an unsupported file type (e.g., GIF) rejected."
+    },
+    {
+      "id": "C09",
+      "item": "Photos size boundary: exactly 10 MB accepted."
+    },
+    {
+      "id": "C10",
+      "item": "Photos size boundary: just over 10 MB rejected."
+    },
+    {
+      "id": "C11",
+      "item": "A photo rejected for size or type does not count toward the 10-photo limit."
+    },
+    {
+      "id": "C12",
+      "item": "Title length boundary: 4 characters rejected."
+    },
+    {
+      "id": "C13",
+      "item": "Title length boundary: 5 characters accepted."
+    },
+    {
+      "id": "C14",
+      "item": "Title length boundary: 80 characters accepted."
+    },
+    {
+      "id": "C15",
+      "item": "Title length boundary: 81 characters rejected."
+    },
+    {
+      "id": "C16",
+      "item": "Title whitespace trimming: a whitespace-padded string whose trimmed length is below 5 characters fails validation."
+    },
+    {
+      "id": "C17",
+      "item": "Title consecutive characters boundary: 3 consecutive identical characters accepted."
+    },
+    {
+      "id": "C18",
+      "item": "Title consecutive characters boundary: 4 consecutive identical characters rejected."
+    },
+    {
+      "id": "C19",
+      "item": "Category validation: leaf category accepted."
+    },
+    {
+      "id": "C20",
+      "item": "Category validation: non-leaf category rejected."
+    },
+    {
+      "id": "C21",
+      "item": "Price boundary: -1 rejected."
+    },
+    {
+      "id": "C22",
+      "item": "Price boundary: 0 accepted and displays as 'Free'."
+    },
+    {
+      "id": "C23",
+      "item": "Price boundary: 9,999,999 accepted."
+    },
+    {
+      "id": "C24",
+      "item": "Price boundary: 10,000,000 rejected."
+    },
+    {
+      "id": "C25",
+      "item": "Price format: decimal value rejected."
+    },
+    {
+      "id": "C26",
+      "item": "Description length boundary: 4,000 characters accepted."
+    },
+    {
+      "id": "C27",
+      "item": "Description length boundary: 4,001 characters rejected."
+    },
+    {
+      "id": "C28",
+      "item": "Description phone-number boundary: 7 digits allowed."
+    },
+    {
+      "id": "C29",
+      "item": "Description phone-number boundary: 8 consecutive digits rejected."
+    },
+    {
+      "id": "C30",
+      "item": "Description phone-number detection: 8+ digits with spaces or dashes rejected."
+    },
+    {
+      "id": "C31",
+      "item": "Deal method: none selected rejected."
+    },
+    {
+      "id": "C32",
+      "item": "Deal method: Meetup only accepted."
+    },
+    {
+      "id": "C33",
+      "item": "Deal method: Delivery only accepted."
+    },
+    {
+      "id": "C34",
+      "item": "Deal method: both Meetup and Delivery accepted."
+    },
+    {
+      "id": "C35",
+      "item": "Conditional field: Meetup location free text (not selected from search results) rejected."
+    },
+    {
+      "id": "C36",
+      "item": "Delivery fee boundary: 0 accepted."
+    },
+    {
+      "id": "C37",
+      "item": "Delivery fee boundary: 500 accepted."
+    },
+    {
+      "id": "C38",
+      "item": "Delivery fee boundary: 501 rejected."
+    },
+    {
+      "id": "C39",
+      "item": "Unchecking Meetup clears and hides the Meetup location field."
+    },
+    {
+      "id": "C40",
+      "item": "Unchecking Delivery clears and hides the Delivery fee field."
+    },
+    {
+      "id": "C41",
+      "item": "Server-side validation: invalid submissions bypassing the client are rejected via the API with the same validation error messages."
+    },
+    {
+      "id": "C42",
+      "item": "'List it' button remains disabled until all required fields pass client-side validation."
+    },
+    {
+      "id": "C43",
+      "item": "On submit failure, the page scrolls to the first invalid field in top-to-bottom table order."
+    },
+    {
+      "id": "C44",
+      "item": "Changing the category keeps values entered in other fields."
+    }
+  ],
+  "traps": [
+    {
+      "id": "T01",
+      "trap": "Asserting a maximum photo resolution or dimension limit, which is deliberately not specified."
+    },
+    {
+      "id": "T02",
+      "trap": "Asserting a minimum photo file size requirement, which is deliberately not specified."
+    },
+    {
+      "id": "T03",
+      "trap": "Asserting that the description validation rule blocks or allows email addresses or URLs, as only phone numbers are specified."
+    },
+    {
+      "id": "T04",
+      "trap": "Asserting specific visual styling or appearance of the 'Free' price label beyond displaying the text 'Free'."
+    },
+    {
+      "id": "T05",
+      "trap": "Asserting that the title field rejects 8+ digits or phone numbers, since the phone-number rule is specified for Description only."
+    },
+    {
+      "id": "T06",
+      "trap": "Asserting or testing draft autosave behavior, which is explicitly out of scope for this release."
+    },
+    {
+      "id": "T07",
+      "trap": "Asserting that GIF photos are accepted, which contradicts the rule allowing only JPG, PNG, or HEIC files."
+    },
+    {
+      "id": "T08",
+      "trap": "Asserting that the Price field allows decimal values, which contradicts the rule requiring integers with no decimals."
+    }
+  ],
+  "_meta": {
+    "judge_provider": "gemini",
+    "judge_model": "gemini-4-neon",
+    "attempts": 1,
+    "seconds": 61.1,
+    "note": "Generated by `judge.py prepare`. Review by hand."
+  }
+}

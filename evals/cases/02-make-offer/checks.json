@@ -1,0 +1,491 @@
+{
+  "reference_checks": [
+    {
+      "id": "R01",
+      "source_tc": "TC-001",
+      "check": "Viewing an Available listing with offers enabled as a buyer displays the 'Make Offer' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R02",
+      "source_tc": "TC-001",
+      "check": "Viewing an Available listing with 'Fixed price \u2014 no offers' enabled as a buyer hides the 'Make Offer' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R03",
+      "source_tc": "TC-001",
+      "check": "Viewing a Reserved listing as a buyer hides the 'Make Offer' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R04",
+      "source_tc": "TC-001",
+      "check": "Viewing a Sold listing as a buyer hides the 'Make Offer' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R05",
+      "source_tc": "TC-001",
+      "check": "Viewing an Available listing as its own seller hides the 'Make Offer' button.",
+      "priority": "P0"
+    },
+    {
+      "id": "R06",
+      "source_tc": "TC-002",
+      "check": "Tapping 'Make Offer' on an eligible Available listing while logged out prompts the user to log in.",
+      "priority": "P1"
+    },
+    {
+      "id": "R07",
+      "source_tc": "TC-002",
+      "check": "Completing login with valid buyer credentials after tapping 'Make Offer' automatically returns the user to the Make Offer sheet pre-filled with the listing price.",
+      "priority": "P1"
+    },
+    {
+      "id": "R08",
+      "source_tc": "TC-003",
+      "check": "Opening the Make Offer sheet on a $100 listing pre-fills the default offer amount with 100.",
+      "priority": "P0"
+    },
+    {
+      "id": "R09",
+      "source_tc": "TC-003",
+      "check": "Attempting to submit an offer amount of 0 on a $100 listing is blocked by validation.",
+      "priority": "P0"
+    },
+    {
+      "id": "R10",
+      "source_tc": "TC-003",
+      "check": "Attempting to submit a negative offer amount (< 0) on a $100 listing is blocked by validation.",
+      "priority": "P0"
+    },
+    {
+      "id": "R11",
+      "source_tc": "TC-003",
+      "check": "Attempting to enter or submit a decimal offer amount of 50.50 on a $100 listing is blocked by validation.",
+      "priority": "P0"
+    },
+    {
+      "id": "R12",
+      "source_tc": "TC-003",
+      "check": "Attempting to submit an offer amount of 101 (above the $100 listing price) is blocked by validation.",
+      "priority": "P0"
+    },
+    {
+      "id": "R13",
+      "source_tc": "TC-003",
+      "check": "Submitting a valid whole-number offer of 100 (within 1 to 100) on a $100 listing is accepted.",
+      "priority": "P0"
+    },
+    {
+      "id": "R14",
+      "source_tc": "TC-004",
+      "check": "Entering 49 in the offer amount field on a $100 listing displays the inline warning 'This offer is much lower than the asking price. The seller may be less likely to accept.'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R15",
+      "source_tc": "TC-004",
+      "check": "Tapping Submit on a $49 offer (<50% of a $100 listing price) succeeds despite the inline warning.",
+      "priority": "P1"
+    },
+    {
+      "id": "R16",
+      "source_tc": "TC-005",
+      "check": "Submitting an $80 offer on a $100 listing with no prior chat creates a buyer-seller chat thread with the system message '[Buyer] offered $80'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R17",
+      "source_tc": "TC-005",
+      "check": "After submitting an $80 offer on a $100 listing and refreshing the listing page as the same buyer, the listing button changes to 'View your offer'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R18",
+      "source_tc": "TC-005",
+      "check": "Submitting an $80 offer triggers a push notification to the seller.",
+      "priority": "P0"
+    },
+    {
+      "id": "R19",
+      "source_tc": "TC-005",
+      "check": "Submitting an $80 offer on a $100 listing fires the 'offer_submitted' analytics event with listing_id, offer_amount=80, and listing_price=100.",
+      "priority": "P0"
+    },
+    {
+      "id": "R20",
+      "source_tc": "TC-006",
+      "check": "Accepting Buyer A's $80 pending offer changes Buyer A's offer status to Accepted.",
+      "priority": "P0"
+    },
+    {
+      "id": "R21",
+      "source_tc": "TC-006",
+      "check": "Accepting Buyer A's $80 pending offer changes the listing status to Reserved.",
+      "priority": "P0"
+    },
+    {
+      "id": "R22",
+      "source_tc": "TC-006",
+      "check": "Accepting Buyer A's $80 pending offer automatically changes Buyer B's competing $75 pending offer to Declined.",
+      "priority": "P0"
+    },
+    {
+      "id": "R23",
+      "source_tc": "TC-006",
+      "check": "When Buyer B's competing $75 pending offer is automatically declined, Buyer B's chat displays the system message 'This item has been reserved for another buyer.'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R24",
+      "source_tc": "TC-006",
+      "check": "Accepting Buyer A's $80 pending offer sends a push notification to Buyer A.",
+      "priority": "P0"
+    },
+    {
+      "id": "R25",
+      "source_tc": "TC-006",
+      "check": "Automatically declining Buyer B's competing $75 pending offer sends a push notification to Buyer B.",
+      "priority": "P0"
+    },
+    {
+      "id": "R26",
+      "source_tc": "TC-006",
+      "check": "Accepting Buyer A's $80 pending offer fires the 'offer_accepted' analytics event.",
+      "priority": "P0"
+    },
+    {
+      "id": "R27",
+      "source_tc": "TC-007",
+      "check": "Declining the buyer's pending $70 offer on a $100 listing changes the offer status to Declined.",
+      "priority": "P1"
+    },
+    {
+      "id": "R28",
+      "source_tc": "TC-007",
+      "check": "Declining the buyer's pending $70 offer sends a push notification to the buyer.",
+      "priority": "P1"
+    },
+    {
+      "id": "R29",
+      "source_tc": "TC-007",
+      "check": "Declining the buyer's pending $70 offer fires the 'offer_declined' analytics event.",
+      "priority": "P1"
+    },
+    {
+      "id": "R30",
+      "source_tc": "TC-007",
+      "check": "After the seller declines the buyer's $70 offer, the 'Make Offer' button reappears on the listing page for the buyer.",
+      "priority": "P1"
+    },
+    {
+      "id": "R31",
+      "source_tc": "TC-007",
+      "check": "After the buyer's $70 offer is declined, the buyer can successfully submit a new offer of $85 on the $100 listing.",
+      "priority": "P1"
+    },
+    {
+      "id": "R32",
+      "source_tc": "TC-008",
+      "check": "When countering a buyer's $60 offer on a $100 listing, attempting to submit a counter amount of $60 (equal to or less than the buyer's offer) is rejected.",
+      "priority": "P0"
+    },
+    {
+      "id": "R33",
+      "source_tc": "TC-008",
+      "check": "When countering a buyer's $60 offer on a $100 listing, attempting to submit a counter amount of $105 (above the $100 listing price) is rejected.",
+      "priority": "P0"
+    },
+    {
+      "id": "R34",
+      "source_tc": "TC-008",
+      "check": "Submitting a counter-offer of $85 on a buyer's $60 offer for a $100 listing succeeds.",
+      "priority": "P0"
+    },
+    {
+      "id": "R35",
+      "source_tc": "TC-008",
+      "check": "Submitting a counter-offer of $85 notifies the buyer.",
+      "priority": "P0"
+    },
+    {
+      "id": "R36",
+      "source_tc": "TC-008",
+      "check": "Submitting a counter-offer of $85 fires the 'offer_countered' analytics event.",
+      "priority": "P0"
+    },
+    {
+      "id": "R37",
+      "source_tc": "TC-008",
+      "check": "Viewing the seller's $85 counter-offer as the buyer allows only Accept or Decline with no option to submit a second counter-offer.",
+      "priority": "P0"
+    },
+    {
+      "id": "R38",
+      "source_tc": "TC-008",
+      "check": "Accepting the seller's $85 counter-offer as the buyer sets the offer status to Accepted.",
+      "priority": "P0"
+    },
+    {
+      "id": "R39",
+      "source_tc": "TC-008",
+      "check": "Accepting the seller's $85 counter-offer as the buyer sets the listing status to Reserved.",
+      "priority": "P0"
+    },
+    {
+      "id": "R40",
+      "source_tc": "TC-009",
+      "check": "Advancing past 48 hours from submission of a pending offer with no seller response changes the offer status to Expired.",
+      "priority": "P1"
+    },
+    {
+      "id": "R41",
+      "source_tc": "TC-009",
+      "check": "When a pending offer expires after 48 hours without response, both buyer and seller see the chat system message 'This offer has expired.'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R42",
+      "source_tc": "TC-009",
+      "check": "When a pending offer expires after 48 hours without response, the buyer receives a push notification.",
+      "priority": "P1"
+    },
+    {
+      "id": "R43",
+      "source_tc": "TC-009",
+      "check": "When a pending offer expires after 48 hours without response, the 'offer_expired' analytics event fires.",
+      "priority": "P1"
+    },
+    {
+      "id": "R44",
+      "source_tc": "TC-009",
+      "check": "After a pending offer expires, the buyer can navigate to the listing and submit a new offer.",
+      "priority": "P1"
+    },
+    {
+      "id": "R45",
+      "source_tc": "TC-010",
+      "check": "Tapping Withdraw on a pending offer on Listing 1 changes the offer status to Withdrawn.",
+      "priority": "P1"
+    },
+    {
+      "id": "R46",
+      "source_tc": "TC-010",
+      "check": "Withdrawing a pending offer on Listing 1 fires the 'offer_withdrawn' analytics event.",
+      "priority": "P1"
+    },
+    {
+      "id": "R47",
+      "source_tc": "TC-010",
+      "check": "Viewing an accepted offer on Listing 2 does not permit the buyer to withdraw the offer.",
+      "priority": "P1"
+    },
+    {
+      "id": "R48",
+      "source_tc": "TC-011",
+      "check": "Viewing a listing as the seller when there are 3 pending offers and 1 declined offer displays the badge 'Offers (3)' excluding the declined offer.",
+      "priority": "P1"
+    },
+    {
+      "id": "R49",
+      "source_tc": "TC-011",
+      "check": "Opening the seller's offer inbox lists higher-amount pending offers before lower-amount offers ($90 offers from Buyer C and Buyer B before Buyer A's $70 offer).",
+      "priority": "P1"
+    },
+    {
+      "id": "R50",
+      "source_tc": "TC-011",
+      "check": "Opening the seller's offer inbox breaks ties in offer amount by earliest submission time (Buyer C's $90 offer at 10:02 AM appears before Buyer B's $90 offer at 10:05 AM).",
+      "priority": "P1"
+    }
+  ],
+  "checklist_items": [
+    {
+      "id": "C01",
+      "item": "Eligibility: 'Make Offer' button is hidden when the listing status is not Available (Sold or Reserved)."
+    },
+    {
+      "id": "C02",
+      "item": "Eligibility: 'Make Offer' button is hidden when the seller has enabled 'Fixed price \u2014 no offers'."
+    },
+    {
+      "id": "C03",
+      "item": "Eligibility: 'Make Offer' button is hidden when the viewer is the listing's own seller."
+    },
+    {
+      "id": "C04",
+      "item": "Eligibility: tapping 'Make Offer' while logged out redirects to login and returns the buyer to the offer sheet after authentication."
+    },
+    {
+      "id": "C05",
+      "item": "Amount boundary: offer amount of 0 is rejected."
+    },
+    {
+      "id": "C06",
+      "item": "Amount boundary: offer amount of 1 (minimum valid whole number) is accepted."
+    },
+    {
+      "id": "C07",
+      "item": "Amount boundary: offer amount equal to the listing price is accepted."
+    },
+    {
+      "id": "C08",
+      "item": "Amount boundary: offer amount of listing price + 1 is rejected."
+    },
+    {
+      "id": "C09",
+      "item": "Amount boundary: non-integer offer amount is rejected."
+    },
+    {
+      "id": "C10",
+      "item": "Amount boundary: offer amount of exactly 50% of the listing price does not show the lowball warning."
+    },
+    {
+      "id": "C11",
+      "item": "Amount boundary: offer amount just under 50% of the listing price shows the inline warning and can still be submitted."
+    },
+    {
+      "id": "C12",
+      "item": "One-pending-offer rule: a buyer can have only one pending offer per listing and sees 'View your offer' instead of 'Make Offer' while one is pending."
+    },
+    {
+      "id": "C13",
+      "item": "Accept cascade: accepting an offer automatically declines all other pending offers on the same listing."
+    },
+    {
+      "id": "C14",
+      "item": "Accept cascade: auto-declined competing buyers receive the system message 'This item has been reserved for another buyer.'."
+    },
+    {
+      "id": "C15",
+      "item": "Accept cascade: accepting an offer changes the listing status to Reserved."
+    },
+    {
+      "id": "C16",
+      "item": "Counter validation: counter amount must be strictly greater than the buyer's offer."
+    },
+    {
+      "id": "C17",
+      "item": "Counter validation: counter amount must be less than or equal to the listing price."
+    },
+    {
+      "id": "C18",
+      "item": "Counter limit: only one counter round is allowed; the buyer cannot counter a seller's counter-offer."
+    },
+    {
+      "id": "C19",
+      "item": "Expiry: a pending buyer offer expires after 48 hours without response."
+    },
+    {
+      "id": "C20",
+      "item": "Expiry: a pending seller counter-offer expires after 48 hours without response."
+    },
+    {
+      "id": "C21",
+      "item": "Expiry: after expiry, the buyer is allowed to submit a new offer."
+    },
+    {
+      "id": "C22",
+      "item": "Withdrawal: a buyer can withdraw a pending offer before the seller responds."
+    },
+    {
+      "id": "C23",
+      "item": "Withdrawal: a buyer cannot withdraw an offer once it has been accepted."
+    },
+    {
+      "id": "C24",
+      "item": "Seller inbox: 'Offers (N)' count reflects only pending offers."
+    },
+    {
+      "id": "C25",
+      "item": "Seller inbox: offers are sorted by amount descending (highest first)."
+    },
+    {
+      "id": "C26",
+      "item": "Seller inbox: ties in offer amount are broken by earliest submitted first."
+    },
+    {
+      "id": "C27",
+      "item": "Analytics: 'offer_submitted' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C28",
+      "item": "Analytics: 'offer_accepted' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C29",
+      "item": "Analytics: 'offer_declined' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C30",
+      "item": "Analytics: 'offer_countered' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C31",
+      "item": "Analytics: 'offer_expired' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C32",
+      "item": "Analytics: 'offer_withdrawn' event fires with listing_id, offer_amount, and listing_price."
+    },
+    {
+      "id": "C33",
+      "item": "Buyer push notification: triggered when the buyer's offer is accepted."
+    },
+    {
+      "id": "C34",
+      "item": "Buyer push notification: triggered when the buyer's offer is declined."
+    },
+    {
+      "id": "C35",
+      "item": "Buyer push notification: triggered when the buyer's offer is countered."
+    },
+    {
+      "id": "C36",
+      "item": "Buyer push notification: triggered when the buyer's offer expires."
+    }
+  ],
+  "traps": [
+    {
+      "id": "T01",
+      "trap": "Asserting as fact whether a seller can or cannot withdraw/undo an Accept (deliberately not specified)."
+    },
+    {
+      "id": "T02",
+      "trap": "Asserting as fact a maximum number of offers a buyer can make on a listing over time (deliberately not specified)."
+    },
+    {
+      "id": "T03",
+      "trap": "Asserting as fact specific currency formatting or decimal handling rules beyond requiring whole numbers (deliberately not specified)."
+    },
+    {
+      "id": "T04",
+      "trap": "Asserting as fact what happens to pending offers when the seller edits the listing price (deliberately not specified)."
+    },
+    {
+      "id": "T05",
+      "trap": "Asserting as fact whether a declined buyer is notified by a chat system message, since only a push notification is stated for decline (deliberately not specified)."
+    },
+    {
+      "id": "T06",
+      "trap": "Asserting that the buyer can counter the seller's counter-offer (explicitly forbidden by \u00a73.3)."
+    },
+    {
+      "id": "T07",
+      "trap": "Asserting that an offer amount above the listing price is accepted (contradicts \u00a73.2)."
+    },
+    {
+      "id": "T08",
+      "trap": "Asserting a 24-hour expiry or any expiry duration other than 48 hours (contradicts \u00a73.4)."
+    }
+  ],
+  "_meta": {
+    "judge_provider": "gemini",
+    "judge_model": "gemini-4-neon",
+    "attempts": 1,
+    "seconds": 81.1,
+    "note": "Generated by `judge.py prepare`. Review by hand."
+  }
+}

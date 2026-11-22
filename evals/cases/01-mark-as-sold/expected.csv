@@ -1,0 +1,12 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,Seller marks an active listing as Sold from the listing page,User is logged in as the seller and has an active listing in Available status.,"1. Navigate to the active listing page.
+2. Click the 'Mark as Sold' button.
+3. Confirm the action if prompted.","Listing status updates to 'Sold' on the listing page, and an option to undo/relist becomes available.",P0,Functional,Mark Listing as Sold
+TC-002,Sold listing is excluded from search results,A listing has just been marked as 'Sold' by the seller.,"1. Log in as a buyer or browse as a guest.
+2. Search for the listing using its exact title and category filters.",The sold listing does not appear anywhere in the search results.,P0,Functional,Mark Listing as Sold
+TC-003,Existing chat participants see 'Sold' badge after listing is marked sold,Buyer A had an existing chat thread about the listing before it was marked sold.,"1. Seller marks the listing as 'Sold'.
+2. Log in as Buyer A.
+3. Open the chat list and navigate into the chat thread for that listing.",A 'Sold' badge is displayed on the listing header/preview inside the chat thread and inbox.,P1,Functional,Mark Listing as Sold
+TC-004,Seller undoes 'Sold' status when a deal falls through,Listing is currently in 'Sold' status.,"1. Navigate to the sold listing page as the seller.
+2. Click 'Undo Sold' / 'Mark as Available'.
+3. Search for the listing as a buyer and check existing buyer chats.","Listing reverts to 'Available' status, reappears in search results, and the 'Sold' badge is removed from existing chats.",P0,Functional,Mark Listing as Sold
