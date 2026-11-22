@@ -1,0 +1,219 @@
+{
+  "reference_checks": [
+    {
+      "id": "R01",
+      "source_tc": "TC-001",
+      "check": "When a logged-out visitor completes guest checkout for an eligible fixed-price delivery listing ($100 item + $15 delivery fee = $115 total) using valid contact/delivery details, Visa/Mastercard, and 3-D Secure verification, the order succeeds and the confirmation screen displays an order number.",
+      "priority": "P0"
+    },
+    {
+      "id": "R02",
+      "source_tc": "TC-001",
+      "check": "After completing guest checkout for the $115 delivery listing, the confirmation screen displays an optional 'Create account' prompt pre-filled with the guest's entered email.",
+      "priority": "P0"
+    },
+    {
+      "id": "R03",
+      "source_tc": "TC-001",
+      "check": "After completing guest checkout for the $115 delivery listing, a confirmation email containing an unauthenticated 'Track order' link is sent.",
+      "priority": "P0"
+    },
+    {
+      "id": "R04",
+      "source_tc": "TC-001",
+      "check": "After completing guest checkout for the $115 delivery listing, the listing status changes to 'Sold'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R05",
+      "source_tc": "TC-001",
+      "check": "After completing guest checkout for the $115 delivery listing, the seller sees the order with the buyer shown as 'Guest buyer' plus the guest's entered name.",
+      "priority": "P0"
+    },
+    {
+      "id": "R06",
+      "source_tc": "TC-002",
+      "check": "When a logged-out visitor taps 'Buy now' on a delivery fixed-price listing with a $301 total ($290 item + $11 fee, exceeding the $300 cap in \u00a74 while noting conflict with \u00a71's $500), 'Continue as guest' is hidden and only 'Log in' is displayed.",
+      "priority": "P0"
+    },
+    {
+      "id": "R07",
+      "source_tc": "TC-002",
+      "check": "When a logged-out visitor checks checkout options on a $50 meetup-only listing, Guest Checkout is not offered.",
+      "priority": "P0"
+    },
+    {
+      "id": "R08",
+      "source_tc": "TC-002",
+      "check": "When a logged-out visitor checks checkout options on a $50 listing allowing offers, Guest Checkout is not offered.",
+      "priority": "P0"
+    },
+    {
+      "id": "R09",
+      "source_tc": "TC-003",
+      "check": "When a guest attempts to place a 4th guest order within 24 hours using an email address that has already completed 3 guest orders, the attempt is blocked with the message \"You've reached the guest order limit. Log in or create an account to continue.\"",
+      "priority": "P1"
+    },
+    {
+      "id": "R10",
+      "source_tc": "TC-004",
+      "check": "When a guest enters card details, taps 'Pay', and fails or cancels the 3-D Secure authentication challenge, the error \"Payment could not be verified. Try another card.\" is displayed.",
+      "priority": "P0"
+    },
+    {
+      "id": "R11",
+      "source_tc": "TC-004",
+      "check": "When a guest fails or cancels the 3-D Secure authentication challenge on payment, no order is created.",
+      "priority": "P0"
+    },
+    {
+      "id": "R12",
+      "source_tc": "TC-004",
+      "check": "When a guest fails or cancels the 3-D Secure authentication challenge on payment, the listing remains 'Available'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R13",
+      "source_tc": "TC-005",
+      "check": "When the 'Track order' link from the confirmation email for 'guest@example.com' is opened in an incognito browser, the order's tracking page opens without requiring login.",
+      "priority": "P1"
+    },
+    {
+      "id": "R14",
+      "source_tc": "TC-005",
+      "check": "When the guest completes the pre-filled 'Create account' flow for 'guest@example.com' on the post-purchase screen, the newly created account automatically shows the guest order linked in Order History.",
+      "priority": "P1"
+    }
+  ],
+  "checklist_items": [
+    {
+      "id": "C01",
+      "item": "Surface or flag the internal contradiction in the guest order cap between \u00a71 ($500 per order) and \u00a74 ($300 order total) rather than silently picking one value."
+    },
+    {
+      "id": "C02",
+      "item": "Verify meetup-only listings do not offer the guest checkout path."
+    },
+    {
+      "id": "C03",
+      "item": "Verify offer-accepted listings do not offer the guest checkout path."
+    },
+    {
+      "id": "C04",
+      "item": "Verify logged-in users do not get the guest checkout path."
+    },
+    {
+      "id": "C05",
+      "item": "Verify guest checkout cannot proceed when the required email field is missing."
+    },
+    {
+      "id": "C06",
+      "item": "Verify guest checkout cannot proceed when the required full name field is missing."
+    },
+    {
+      "id": "C07",
+      "item": "Verify guest checkout cannot proceed when the required phone field is missing."
+    },
+    {
+      "id": "C08",
+      "item": "Verify guest checkout cannot proceed when the required delivery address field is missing."
+    },
+    {
+      "id": "C09",
+      "item": "Verify Visa cards are accepted for guest checkout payment."
+    },
+    {
+      "id": "C10",
+      "item": "Verify Mastercard cards are accepted for guest checkout payment."
+    },
+    {
+      "id": "C11",
+      "item": "Verify an unsupported card brand (e.g., Amex) is rejected during guest checkout."
+    },
+    {
+      "id": "C12",
+      "item": "Verify a guest order with total (item price + delivery fee) exactly at the cap is eligible for guest checkout."
+    },
+    {
+      "id": "C13",
+      "item": "Verify a guest order with total (item price + delivery fee) at cap + 1, where the item price alone is under the cap but the combined total exceeds the cap, is ineligible for guest checkout."
+    },
+    {
+      "id": "C14",
+      "item": "Verify a 3rd guest order within 24 hours for the same email address succeeds."
+    },
+    {
+      "id": "C15",
+      "item": "Verify a 4th guest order within 24 hours for the same email address is blocked with the exact message \"You've reached the guest order limit. Log in or create an account to continue.\""
+    },
+    {
+      "id": "C16",
+      "item": "Verify the 3-orders-per-24-hours guest rate limit for an email address resets after 24 hours."
+    },
+    {
+      "id": "C17",
+      "item": "Verify a failed 3-D Secure challenge displays the message \"Payment could not be verified. Try another card.\""
+    },
+    {
+      "id": "C18",
+      "item": "Verify a failed 3-D Secure challenge creates no order."
+    },
+    {
+      "id": "C19",
+      "item": "Verify the 'Track order' link in the confirmation email works while logged out."
+    },
+    {
+      "id": "C20",
+      "item": "Verify the post-purchase 'Create account' prompt is pre-filled with the guest's email address."
+    },
+    {
+      "id": "C21",
+      "item": "Verify the guest order is linked to the account after the guest completes post-purchase account creation."
+    },
+    {
+      "id": "C22",
+      "item": "Verify the seller sees the buyer displayed as 'Guest buyer' plus the name entered by the guest."
+    },
+    {
+      "id": "C23",
+      "item": "Verify the listing status changes to 'Sold' once guest payment succeeds."
+    }
+  ],
+  "traps": [
+    {
+      "id": "T01",
+      "trap": "Silently resolving the contradiction between \u00a71 ($500 per order) and \u00a74 ($300 order total) by asserting either cap amount as an undisputed fact without noting the conflict."
+    },
+    {
+      "id": "T02",
+      "trap": "Asserting specific email or phone format validation rules."
+    },
+    {
+      "id": "T03",
+      "trap": "Asserting specific behavior or UI for how a guest order is linked to an already-existing account with the same email."
+    },
+    {
+      "id": "T04",
+      "trap": "Asserting specific refund or cancellation flows or policies for guest orders."
+    },
+    {
+      "id": "T05",
+      "trap": "Asserting that the 3-orders-per-24-hours guest rate limit is also keyed or enforced by card or device (only email is specified)."
+    },
+    {
+      "id": "T06",
+      "trap": "Asserting that AmEx or PayPal is accepted for guest checkout payment."
+    },
+    {
+      "id": "T07",
+      "trap": "Asserting that the guest must verify their email address before paying."
+    }
+  ],
+  "_meta": {
+    "judge_provider": "gemini",
+    "judge_model": "gemini-4-neon",
+    "attempts": 1,
+    "seconds": 43.9,
+    "note": "Generated by `judge.py prepare`. Review by hand."
+  }
+}

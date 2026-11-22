@@ -1,0 +1,253 @@
+{
+  "reference_checks": [
+    {
+      "id": "R01",
+      "source_tc": "TC-001",
+      "check": "Toggling 'Free items only' ON when Price range is set to 50 to 200 clears the Price range.",
+      "priority": "P0"
+    },
+    {
+      "id": "R02",
+      "source_tc": "TC-001",
+      "check": "Toggling 'Free items only' ON hides the 'Price low\u2192high' and 'Price high\u2192low' sort options.",
+      "priority": "P0"
+    },
+    {
+      "id": "R03",
+      "source_tc": "TC-001",
+      "check": "Toggling 'Free items only' ON while Sort is set to 'Price low\u2192high' resets the active sort to 'Best match'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R04",
+      "source_tc": "TC-001",
+      "check": "Entering 10 in Price min while 'Free items only' is ON turns 'Free items only' OFF.",
+      "priority": "P0"
+    },
+    {
+      "id": "R05",
+      "source_tc": "TC-002",
+      "check": "Entering Price Min = 200 and Max = 50 and blurring the field automatically swaps the values to Min = 50 and Max = 200.",
+      "priority": "P1"
+    },
+    {
+      "id": "R06",
+      "source_tc": "TC-002",
+      "check": "Clearing Price Min (empty) with Max = 200 and applying filters defaults empty Min to 0 (results priced 0\u2013200).",
+      "priority": "P1"
+    },
+    {
+      "id": "R07",
+      "source_tc": "TC-003",
+      "check": "With location permission denied and 'Meetup' selected, Distance is disabled and displays helper text 'Turn on location to use this'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R08",
+      "source_tc": "TC-003",
+      "check": "With location permission denied, 'Nearest' sort is disabled and displays helper text 'Turn on location to use this'.",
+      "priority": "P1"
+    },
+    {
+      "id": "R09",
+      "source_tc": "TC-003",
+      "check": "Granting location permission while the filter panel remains open immediately enables Distance without closing or reopening the panel.",
+      "priority": "P1"
+    },
+    {
+      "id": "R10",
+      "source_tc": "TC-003",
+      "check": "Granting location permission while the filter panel remains open immediately enables 'Nearest' sort without closing or reopening the panel.",
+      "priority": "P1"
+    },
+    {
+      "id": "R11",
+      "source_tc": "TC-004",
+      "check": "With location permission granted and 'Meetup' unselected at defaults, Distance is disabled.",
+      "priority": "P0"
+    },
+    {
+      "id": "R12",
+      "source_tc": "TC-004",
+      "check": "Selecting Sort = 'Nearest' automatically checks 'Meetup'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R13",
+      "source_tc": "TC-004",
+      "check": "Selecting Sort = 'Nearest' enables Distance (allowing selection of '5 km').",
+      "priority": "P0"
+    },
+    {
+      "id": "R14",
+      "source_tc": "TC-004",
+      "check": "Deselecting 'Meetup' when Distance is set to '5 km' resets Distance to 'Any'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R15",
+      "source_tc": "TC-004",
+      "check": "Deselecting 'Meetup' when Distance is set to '5 km' disables Distance.",
+      "priority": "P0"
+    },
+    {
+      "id": "R16",
+      "source_tc": "TC-004",
+      "check": "Deselecting 'Meetup' while Sort is 'Nearest' reverts Sort back to 'Best match'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R17",
+      "source_tc": "TC-005",
+      "check": "Changing Category from 'Electronics' (with Conditions 'Brand new' and 'Like new' selected) to 'Services' (flagged no_condition) hides the Condition filter and clears the selected conditions.",
+      "priority": "P1"
+    },
+    {
+      "id": "R18",
+      "source_tc": "TC-005",
+      "check": "Changing Category from 'Services' back to 'Electronics' shows the Condition filter again with no conditions selected.",
+      "priority": "P1"
+    },
+    {
+      "id": "R19",
+      "source_tc": "TC-006",
+      "check": "Changing filters (applying Meetup, Distance 10 km, Nearest sort, and Condition 'Like new') updates the 'Show N results' button count live.",
+      "priority": "P0"
+    },
+    {
+      "id": "R20",
+      "source_tc": "TC-006",
+      "check": "Clicking 'Show N results' displays the applied filters as removable filter chips above the results.",
+      "priority": "P0"
+    },
+    {
+      "id": "R21",
+      "source_tc": "TC-006",
+      "check": "Removing the 'Meetup' chip directly from the results header also removes the '10 km' Distance filter.",
+      "priority": "P0"
+    },
+    {
+      "id": "R22",
+      "source_tc": "TC-006",
+      "check": "Removing the 'Meetup' chip directly from the results header resets Sort from 'Nearest' to 'Best match'.",
+      "priority": "P0"
+    },
+    {
+      "id": "R23",
+      "source_tc": "TC-006",
+      "check": "Reopening the filter panel and tapping 'Reset' returns all filters to their default state.",
+      "priority": "P0"
+    }
+  ],
+  "checklist_items": [
+    {
+      "id": "C01",
+      "item": "Rule 1 (Free \u2192 Price): Turning 'Free items only' on clears the Price range."
+    },
+    {
+      "id": "C02",
+      "item": "Rule 1 (Price \u2192 Free): Typing/entering a value in Price range turns 'Free items only' off."
+    },
+    {
+      "id": "C03",
+      "item": "Rule 2 (Min > Max): Entering Price min greater than max swaps the two values on blur."
+    },
+    {
+      "id": "C04",
+      "item": "Rule 2 (Empty min): Leaving Price min empty treats the lower bound as 0."
+    },
+    {
+      "id": "C05",
+      "item": "Rule 2 (Empty max): Leaving Price max empty treats the upper bound as unbounded (no upper limit)."
+    },
+    {
+      "id": "C06",
+      "item": "Rule 3 (Meetup off \u2192 Distance): Deselecting Meetup resets Distance to 'Any' and disables Distance."
+    },
+    {
+      "id": "C07",
+      "item": "Rule 3 (Distance until Meetup on): Distance stays disabled until Meetup is selected."
+    },
+    {
+      "id": "C08",
+      "item": "Rule 4 (Permission denied \u2192 Distance/Nearest): Denied location permission disables both Distance and Nearest sort and shows helper text 'Turn on location to use this'."
+    },
+    {
+      "id": "C09",
+      "item": "Rule 4 (Permission granted \u2192 Distance/Nearest): Granting location permission enables both Distance and Nearest sort without reopening the panel."
+    },
+    {
+      "id": "C10",
+      "item": "Rule 5 (Nearest \u2192 Meetup): Choosing Nearest sort automatically selects Meetup if not already selected."
+    },
+    {
+      "id": "C11",
+      "item": "Rule 5 (Meetup \u2192 Nearest): Deselecting Meetup while Nearest sort is active reverts sort to Best match."
+    },
+    {
+      "id": "C12",
+      "item": "Rule 6 (Free on \u2192 Price sorts): Turning 'Free items only' on hides 'Price low\u2192high' and 'Price high\u2192low' sorts and falls back an active price sort to Best match."
+    },
+    {
+      "id": "C13",
+      "item": "Rule 6 (Free off \u2192 Price sorts): Turning 'Free items only' off makes 'Price low\u2192high' and 'Price high\u2192low' sorts visible again."
+    },
+    {
+      "id": "C14",
+      "item": "Rule 7 (no_condition Category \u2192 Condition): Selecting a no_condition category hides the Condition filter and clears selected conditions."
+    },
+    {
+      "id": "C15",
+      "item": "Rule 7 (Normal Category \u2190 no_condition): Switching back from a no_condition category to a normal category does NOT restore previously selected conditions."
+    },
+    {
+      "id": "C16",
+      "item": "Chain: With Nearest sort active, removing the Meetup chip resets Distance and reverts sort to Best match."
+    },
+    {
+      "id": "C17",
+      "item": "Chain: Turning 'Free items only' on while 'Price low\u2192high' sort is active and price range is set clears price range and falls back sort to Best match."
+    },
+    {
+      "id": "C18",
+      "item": "Reset restores every default listed in the PRD (no category, no price, Free off, no condition, no deal method, Distance 'Any', Sort 'Best match')."
+    },
+    {
+      "id": "C19",
+      "item": "The 'Show N results' button updates live as filters change."
+    }
+  ],
+  "traps": [
+    {
+      "id": "T01",
+      "trap": "Asserting whether filters persist (or do not persist) across sessions or app restarts."
+    },
+    {
+      "id": "T02",
+      "trap": "Asserting exact result counts or specific ranking order for the 'Best match' sort."
+    },
+    {
+      "id": "T03",
+      "trap": "Asserting specific behaviour for location permission 'Ask next time' or approximate location."
+    },
+    {
+      "id": "T04",
+      "trap": "Asserting that turning 'Free items only' off restores the previously cleared Price range values (or asserting unspecified restoration behaviour)."
+    },
+    {
+      "id": "T05",
+      "trap": "Asserting specific maximum or minimum allowed price input limits."
+    },
+    {
+      "id": "T06",
+      "trap": "Asserting that switching back from a no_condition category to a normal category restores previously selected Condition values."
+    }
+  ],
+  "_meta": {
+    "judge_provider": "gemini",
+    "judge_model": "gemini-4-neon",
+    "attempts": 1,
+    "seconds": 55.9,
+    "note": "Generated by `judge.py prepare`. Review by hand."
+  }
+}

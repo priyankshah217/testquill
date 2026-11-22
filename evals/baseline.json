@@ -1,0 +1,240 @@
+{
+  "run_id": "20261123-011908-regrade",
+  "overall": {
+    "recall": 0.821,
+    "checklist_coverage": 0.8233,
+    "unsupported_rate": 0.0587,
+    "redundant_rate": 0.0274,
+    "generic_nfr_rate": 0.0949,
+    "p0_agreement": 0.5953
+  },
+  "cases": {
+    "01-mark-as-sold": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.875,
+        "min": 0.875,
+        "max": 0.875
+      },
+      "checklist_coverage": {
+        "mean": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "unsupported_rate": {
+        "mean": 0.0555,
+        "min": 0.0,
+        "max": 0.0833
+      },
+      "redundant_rate": {
+        "mean": 0.0534,
+        "min": 0.0,
+        "max": 0.0833
+      },
+      "generic_nfr_rate": {
+        "mean": 0.1624,
+        "min": 0.1538,
+        "max": 0.1667
+      },
+      "p0_agreement": {
+        "mean": 0.5238,
+        "min": 0.4286,
+        "max": 0.5714
+      },
+      "trap_hits": [
+        "T01"
+      ],
+      "n_generated_mean": 12.3
+    },
+    "02-make-offer": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.7733,
+        "min": 0.72,
+        "max": 0.88
+      },
+      "checklist_coverage": {
+        "mean": 0.75,
+        "min": 0.6667,
+        "max": 0.8889
+      },
+      "unsupported_rate": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "redundant_rate": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "generic_nfr_rate": {
+        "mean": 0.0516,
+        "min": 0.0435,
+        "max": 0.0625
+      },
+      "p0_agreement": {
+        "mean": 0.6473,
+        "min": 0.6111,
+        "max": 0.6944
+      },
+      "trap_hits": [],
+      "n_generated_mean": 39.7
+    },
+    "03-listing-validation": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.7957,
+        "min": 0.7742,
+        "max": 0.8387
+      },
+      "checklist_coverage": {
+        "mean": 0.8258,
+        "min": 0.6591,
+        "max": 0.9318
+      },
+      "unsupported_rate": {
+        "mean": 0.0088,
+        "min": 0.0,
+        "max": 0.0263
+      },
+      "redundant_rate": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "generic_nfr_rate": {
+        "mean": 0.0496,
+        "min": 0.0392,
+        "max": 0.0571
+      },
+      "p0_agreement": {
+        "mean": 0.594,
+        "min": 0.5833,
+        "max": 0.6154
+      },
+      "trap_hits": [],
+      "n_generated_mean": 41.3
+    },
+    "04-promoted-listings": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.8889,
+        "min": 0.8333,
+        "max": 0.9167
+      },
+      "checklist_coverage": {
+        "mean": 0.9048,
+        "min": 0.8571,
+        "max": 0.9286
+      },
+      "unsupported_rate": {
+        "mean": 0.0794,
+        "min": 0.0556,
+        "max": 0.1111
+      },
+      "redundant_rate": {
+        "mean": 0.1111,
+        "min": 0.0,
+        "max": 0.1667
+      },
+      "generic_nfr_rate": {
+        "mean": 0.1217,
+        "min": 0.1111,
+        "max": 0.1429
+      },
+      "p0_agreement": {
+        "mean": 0.5,
+        "min": 0.4545,
+        "max": 0.5455
+      },
+      "trap_hits": [
+        "T03",
+        "T04"
+      ],
+      "n_generated_mean": 16.7
+    },
+    "05-guest-checkout": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.7381,
+        "min": 0.6429,
+        "max": 0.8571
+      },
+      "checklist_coverage": {
+        "mean": 0.6522,
+        "min": 0.6522,
+        "max": 0.6522
+      },
+      "unsupported_rate": {
+        "mean": 0.1794,
+        "min": 0.1,
+        "max": 0.2381
+      },
+      "redundant_rate": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "generic_nfr_rate": {
+        "mean": 0.0984,
+        "min": 0.0952,
+        "max": 0.1
+      },
+      "p0_agreement": {
+        "mean": 0.613,
+        "min": 0.5556,
+        "max": 0.7
+      },
+      "trap_hits": [
+        "T01",
+        "T02"
+      ],
+      "n_generated_mean": 20.3
+    },
+    "06-search-filters": {
+      "runs": 3,
+      "recall": {
+        "mean": 0.8551,
+        "min": 0.8261,
+        "max": 0.8696
+      },
+      "checklist_coverage": {
+        "mean": 0.807,
+        "min": 0.6842,
+        "max": 0.8947
+      },
+      "unsupported_rate": {
+        "mean": 0.029,
+        "min": 0.0,
+        "max": 0.087
+      },
+      "redundant_rate": {
+        "mean": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "generic_nfr_rate": {
+        "mean": 0.0858,
+        "min": 0.0833,
+        "max": 0.087
+      },
+      "p0_agreement": {
+        "mean": 0.6939,
+        "min": 0.6316,
+        "max": 0.8
+      },
+      "trap_hits": [
+        "T02"
+      ],
+      "n_generated_mean": 23.3
+    }
+  },
+  "generators": [
+    "gemini:gemini-2.5-pro"
+  ],
+  "judges": [
+    "gemini-4-neon"
+  ],
+  "judge_and_fix_errors": 0
+}

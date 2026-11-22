@@ -1,0 +1,30 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,End-to-end valid listing creation with all required and optional fields,User is logged in and on the Create Listing form.,"1. Upload 2 valid JPG/PNG photos (<10 MB each).
+2. Enter Title: 'Vintage Mechanical Keyboard'.
+3. Select leaf Category 'Electronics > Keyboards'.
+4. Select Condition: 'Like new'.
+5. Enter Price: 150.
+6. Enter valid Description without phone numbers.
+7. Check both Meetup (select valid location from dropdown) and Delivery (fee: 10).
+8. Click 'List it'.",'List it' button enables once valid; listing is created and published with all entered attributes.,P0,End-to-End,Create Listing - Field Validation v2
+TC-002,"Photo upload validation (count, format, file size, and rejected files not counting toward limit)",User is on Create Listing form.,"1. Verify error when 0 photos are added.
+2. Attempt to upload a GIF/WEBP file and an 11 MB JPG file.
+3. Upload 10 valid HEIC/PNG/JPG photos.
+4. Attempt to upload an 11th valid photo.","Appropriate error messages display for 0 photos, unsupported type ('Only JPG, PNG or HEIC files are supported'), and >10 MB ('Each photo must be under 10 MB'); rejected files do not consume the 10-photo quota; 11th valid photo triggers 'You can add up to 10 photos'.",P0,Boundary/Validation,Create Listing - Photos Validation
+TC-003,"Title validation (whitespace trimming, 5-80 length, and max 3 consecutive identical characters)",User is on Create Listing form.,"1. Enter '   abc   ' and blur.
+2. Enter an 81-character string and blur.
+3. Enter 'Gooooood phone' (6 consecutive 'o's) and blur.
+4. Enter 'Goood phone' (3 consecutive 'o's) and blur.",Steps 1 and 2 show 'Title must be 5–80 characters'; Step 3 shows 'Title can't repeat the same character more than 3 times in a row'; Step 4 passes validation.,P1,Boundary/Validation,Create Listing - Title Validation
+TC-004,Category leaf selection and state preservation when changing categories,"User has filled out Title, Price, and Photos on Create Listing form.","1. Select a parent category that has subcategories and blur.
+2. Select a valid leaf category.
+3. Switch to a different valid leaf category.","Parent category shows 'Choose a more specific category'; selecting a leaf category clears the error; changing categories preserves Title, Price, Photos, and other entered fields.",P1,Functional,Create Listing - Category & Behaviour Notes
+TC-005,"Price validation (0 displays as 'Free', max 9,999,999, decimals and negatives rejected)",User is on Create Listing form.,"1. Enter 0 in Price and publish/preview.
+2. Enter -1, 10.99, and 10000000 in Price.","Price 0 is accepted and displays as 'Free'; negative, decimal, and >9,999,999 values show 'Enter a price between 0 and 9,999,999'.",P1,Boundary/Validation,Create Listing - Price Validation
+TC-006,"Description phone number detection (spaces/dashes stripped) and 4,000 char limit",User is on Create Listing form.,"1. Enter 'Model 1234567' (7 digits) in Description.
+2. Enter 'Call me at 9123 4567' and '9123-4567' (8 digits with space/dash).
+3. Enter 4,001 characters in Description.","7 digits is allowed; 8+ digits ignoring spaces/dashes triggers 'For your safety, don't include phone numbers in the description'; >4,000 chars triggers 'Description can be up to 4,000 characters'.",P0,Boundary/Validation,Create Listing - Description Validation
+TC-007,"Deal method conditional fields (Meetup location search, Delivery fee 0-500) and uncheck clearing",User is on Create Listing form.,"1. Leave both Meetup and Delivery unchecked.
+2. Check Meetup, type free text without selecting from search results.
+3. Select valid location, then uncheck Meetup and re-check it.
+4. Check Delivery, enter 501, then enter 50, then uncheck Delivery.",No deal method selected shows 'Choose at least one deal method'; free-text meetup shows 'Pick a meetup location from the list'; fee >500 shows 'Delivery fee must be between 0 and 500'; unchecking Meetup or Delivery clears and hides its respective sub-field.,P1,Functional,Create Listing - Deal Method Validation
+TC-008,Server-side validation enforcement when client-side validation is bypassed,User has a valid authentication token and API client.,"1. Send a direct POST request to the Create Listing API bypassing UI checks with each of these invalid payloads: 4-char title, phone number in description, non-leaf category, delivery fee 600.",Server rejects each invalid request and returns the exact error messages defined in the specification.,P0,Security/API,Create Listing - Server-side Source of Truth

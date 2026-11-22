@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 import re
+from collections.abc import Callable
+from dataclasses import dataclass
 
 from .providers import LLMProvider, get_provider
+from .quality import QualityReport, check_quality
 
 CSV_COLUMNS = [
     "ID",
@@ -287,3 +290,66 @@ def judge_and_fix(
 
         Path("debug_judge_response.txt").write_text(text or "", encoding="utf-8")
     return _parse_response(text)
+
+
+@dataclass
+class ReviewResult:
+    """Outcome of the post-generation quality pass (see review_and_fix)."""
+
+    rows: list[dict]
+    suggested_filename: str | None
+    initial_report: QualityReport
+    final_report: QualityReport
+    judge_ran: bool = False
+    judge_error: str | None = None
+
+
+def review_and_fix(
+    rows: list[dict],
+    suggested_filename: str | None,
+    provider: LLMProvider,
+    max_tokens: int = 16384,
+    debug: bool = False,
+    on_judge_start: Callable[[QualityReport], None] | None = None,
+) -> ReviewResult:
+    """Run quality checks; if warnings exist, send them to judge_and_fix once.
+
+    Shared by the CLI and the eval harness so both exercise the same pipeline.
+    If the judge fails, the original rows are kept and the error is recorded.
+    """
+    initial = check_quality(rows)
+    if initial.clean:
+        return ReviewResult(rows, suggested_filename, initial, initial)
+
+    if on_judge_start:
+        on_judge_start(initial)
+    warning_dicts = [
+        {
+            "tc_id": w.tc_id,
+            "field": w.field,
+            "issue": w.issue,
+            "matched_text": w.matched_text,
+        }
+        for w in initial.warnings
+    ]
+    try:
+        fixed_rows, fixed_name = judge_and_fix(
+            rows,
+            suggested_filename=suggested_filename,
+            warnings=warning_dicts,
+            provider=provider,
+            max_tokens=max_tokens,
+            debug=debug,
+        )
+    except Exception as e:
+        return ReviewResult(
+            rows,
+            suggested_filename,
+            initial,
+            initial,
+            judge_ran=True,
+            judge_error=f"{type(e).__name__}: {e}",
+        )
+    return ReviewResult(
+        fixed_rows, fixed_name, initial, check_quality(fixed_rows), judge_ran=True
+    )

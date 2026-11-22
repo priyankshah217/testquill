@@ -1,0 +1,19 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,Free items toggle and Price range mutual exclusivity + Price sort hiding,User opens the Search Filters panel.,"1. Select Sort 'Price low→high' and enter Price range 50 to 200.
+2. Toggle 'Free items only' ON.
+3. Enter 10 in Price min while 'Free items only' is ON.","Turning 'Free items only' ON clears Price range, hides 'Price low→high' and 'Price high→low' sort options, and resets active sort to 'Best match'. Entering 10 in Price min turns 'Free items only' OFF.",P0,Functional,Search Filters - Rules 1 & 6
+TC-002,Price min > max auto-swap on blur and empty bound handling,User opens the Search Filters panel.,"1. Enter Min = 200 and Max = 50, then blur/leave the field.
+2. Clear Min (empty) and leave Max = 200, then apply filters.","On blur, Min and Max automatically swap to Min = 50 and Max = 200. Empty Min defaults to 0 (results priced 0–200).",P1,Functional,Search Filters - Rule 2
+TC-003,Location permission toggling dynamically enables/disables Distance and Nearest sort without reopening panel,Location permission is denied; user opens the Search Filters panel.,"1. Select 'Meetup' deal method and inspect Distance and 'Nearest' sort.
+2. Grant location permission in browser/OS settings while keeping the filter panel open.","While permission is denied, Distance and 'Nearest' sort are disabled with helper text 'Turn on location to use this'. Immediately upon granting permission, both become enabled without closing/reopening the panel.",P1,Functional,Search Filters - Rule 4
+TC-004,"Bidirectional coupling between Meetup deal method, Distance radius, and Nearest sort",Location permission is granted; filter panel is at defaults.,"1. Verify Distance is disabled when Meetup is unselected.
+2. Select Sort = 'Nearest'.
+3. Set Distance = '5 km'.
+4. Deselect 'Meetup'.","Selecting 'Nearest' automatically checks 'Meetup' and enables Distance. Deselecting 'Meetup' resets Distance to 'Any', disables Distance, and reverts Sort from 'Nearest' back to 'Best match'.",P0,Functional,Search Filters - Rules 3 & 5
+TC-005,no_condition categories hide and permanently clear selected Condition filters,User opens the Search Filters panel.,"1. Select Category = 'Electronics' and Condition = 'Brand new', 'Like new'.
+2. Change Category to 'Services' (flagged no_condition).
+3. Change Category back to 'Electronics'.",Selecting 'Services' hides the Condition filter and clears the selections; switching back to 'Electronics' shows Condition again with no conditions selected.,P1,Functional,Search Filters - Rule 7
+TC-006,"Live result count updates, removable filter chips apply interaction rules, and Reset restores defaults","Location permission is granted; user applies Meetup, Distance 10 km, Nearest sort, and Condition 'Like new'.","1. Observe 'Show N results' button count as each filter changes.
+2. Click 'Show N results' and verify applied filter chips above results.
+3. Remove the 'Meetup' chip directly from the results header.
+4. Reopen filter panel and tap 'Reset'.",'Show N results' updates live; removing the 'Meetup' chip also removes '10 km' Distance and resets Sort to 'Best match'; 'Reset' returns all filters to default state.,P0,End-to-End,Search Filters - Panel Behaviour

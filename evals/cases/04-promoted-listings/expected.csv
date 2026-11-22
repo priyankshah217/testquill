@@ -1,0 +1,10 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,Seller purchases 3-day or 7-day Bump with sufficient coins and boosts listing to top 3 search results,Seller has >= 60 coins in wallet and an Available listing in an eligible category.,"1. Open the listing page as the seller and tap 'Promote'.
+2. Select '3-day Bump (30 coins)' and confirm purchase.
+3. Check coin balance, listing page timer, and category search results as a buyer.",30 coins are deducted immediately; listing page displays remaining promotion time; listing appears in top 3 search positions for its category with a 'Promoted' badge.,P0,End-to-End,Promoted Listings - Purchase & Placement
+TC-002,Seller with insufficient coins is prompted to top up when attempting to promote,Seller has 20 coins in wallet and an Available listing.,"1. Tap 'Promote' on the listing.
+2. Select '3-day Bump (30 coins)' or '7-day Bump (60 coins)'.",Purchase is blocked and seller is prompted to top up coins.,P1,Functional,Promoted Listings - Coin Balance Check
+TC-003,Promotion eligibility restrictions for non-Available listings and restricted categories,"Seller has a Reserved listing, a Sold listing, and an Available listing in a Trust & Safety restricted category.",1. Navigate to each of the three listings as the seller and check the 'Promote' option.,"Reserved, Sold, and restricted-category listings cannot be promoted.",P1,Functional,Promoted Listings - Eligibility
+TC-004,"Promotion expiration removes 'Promoted' label, restores organic rank, and displays stats comparison",A listing has an active 3-day Bump that reaches expiration.,"1. Advance time past the 3-day promotion duration.
+2. Check search results for the listing.
+3. View the listing stats card on the seller's listing page.",'Promoted' label is removed and listing returns to organic search ranking; seller sees stats card comparing views and chats during the 3-day promotion against the prior 3-day period.,P1,End-to-End,Promoted Listings - Expiry & Reporting

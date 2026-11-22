@@ -1,0 +1,36 @@
+ID,Title,Preconditions,Steps,Expected Result,Priority,Type,Requirement
+TC-001,"Make Offer button eligibility based on listing status, fixed-price setting, and viewer role","Listings exist in various states: Available (offers allowed), Available (Fixed price - no offers), Reserved, Sold, and seller's own listing.","1. View an Available listing with offers enabled as a buyer.
+2. View an Available listing with 'Fixed price — no offers' enabled as a buyer.
+3. View a Reserved or Sold listing as a buyer.
+4. View an Available listing as its own seller.","'Make Offer' button is visible only in Step 1. It is hidden in Steps 2, 3, and 4.",P0,Functional,Make an Offer - Eligibility (§3.1)
+TC-002,Logged-out user tapping Make Offer is redirected to login and returned to offer sheet,User is logged out and viewing an eligible Available listing.,"1. Tap 'Make Offer' on the listing page.
+2. Complete login with valid buyer credentials.","User is prompted to log in and, upon successful authentication, is automatically returned to the Make Offer sheet pre-filled with the listing price.",P1,Functional,Make an Offer - Eligibility (§3.1)
+TC-003,"Offer amount validation boundaries (0, negative, decimal, greater than listing price)",Logged-in buyer opens the Make Offer sheet on a $100 listing.,"1. Verify default pre-filled amount is 100.
+2. Attempt to submit 0.
+3. Attempt to enter 50.50 (decimals).
+4. Attempt to submit 101 (above listing price).
+5. Enter 100 and submit.","Amounts <= 0, decimals, and amounts > $100 are blocked by validation; whole numbers from 1 to 100 are accepted.",P0,Boundary/Validation,Make an Offer - Making an offer (§3.2)
+TC-004,Lowball offer (<50% of listing price) displays inline warning but permits submission,Logged-in buyer opens the Make Offer sheet on a $100 listing.,"1. Enter 49 in the offer amount field.
+2. Observe the UI message.
+3. Tap Submit.","Inline warning 'This offer is much lower than the asking price. The seller may be less likely to accept.' is displayed, and submission succeeds.",P1,Functional,Make an Offer - Making an offer (§3.2)
+TC-005,"End-to-end offer submission creates chat system message, updates CTA, and triggers push notification & analytics",Buyer has no prior chat or pending offer on a $100 listing.,"1. Submit an offer of $80.
+2. Check the buyer-seller chat thread.
+3. Refresh the listing page as the same buyer.
+4. Verify seller push notification and analytics event.","Chat thread is created with system message '[Buyer] offered $80'; listing button changes to 'View your offer'; seller receives push notification; 'offer_submitted' event fires with listing_id, offer_amount=80, listing_price=100.",P0,End-to-End,"Make an Offer - Making an offer, Notifications & Analytics (§3.2, §3.7, §4)"
+TC-006,Seller accepts an offer: auto-declines competing pending offers and marks listing Reserved,Buyer A ($80) and Buyer B ($75) both have pending offers on the same listing.,"1. Log in as the seller and open the listing's offer inbox.
+2. Accept Buyer A's offer of $80.
+3. Check Buyer A's chat, Buyer B's chat, listing status, and analytics.",Buyer A's offer becomes Accepted; listing status changes to Reserved; Buyer B's offer is automatically Declined with system message 'This item has been reserved for another buyer.'; push notifications sent to both buyers; 'offer_accepted' fires.,P0,End-to-End,Make an Offer - Seller response (§3.3)
+TC-007,Seller declines an offer and buyer submits a new offer,Buyer has a pending offer of $70 on a $100 listing.,"1. Seller declines the $70 offer.
+2. Log in as the buyer and check notifications and listing page.
+3. Submit a new offer of $85.","Offer status becomes Declined, buyer receives push notification, 'offer_declined' fires, 'Make Offer' button reappears on listing, and buyer successfully submits $85.",P1,End-to-End,Make an Offer - Seller response (§3.3)
+TC-008,Single counter-offer round validation and buyer acceptance,Buyer has a pending offer of $60 on a $100 listing.,"1. Seller taps Counter and attempts to enter $60 (equal to buyer offer) and $105 (above listing price).
+2. Seller enters $85 and submits counter.
+3. Log in as buyer and verify available actions on the counter-offer.
+4. Buyer accepts the $85 counter.",Counter <= $60 or > $100 is rejected; $85 counter succeeds and notifies buyer ('offer_countered'); buyer can only Accept or Decline (no second counter option); accepting sets offer to Accepted and listing to Reserved.,P0,End-to-End,Make an Offer - Seller response (§3.3)
+TC-009,Pending offer expires after 48 hours without response and allows re-offering,Buyer submitted a pending offer 48 hours ago with no seller response.,"1. Advance system clock past 48 hours from offer submission.
+2. Check offer status, chat thread, push notifications, and analytics.
+3. Navigate to listing as buyer and submit a new offer.","Offer status changes to Expired, both parties see system message 'This offer has expired.', buyer receives push notification, 'offer_expired' fires, and buyer can make a new offer.",P1,End-to-End,Make an Offer - Expiry (§3.4)
+TC-010,Buyer withdraws a pending offer before response vs inability to withdraw after acceptance,Buyer has a pending offer on Listing 1 and an accepted offer on Listing 2.,"1. Open pending offer on Listing 1 and tap Withdraw.
+2. Open accepted offer on Listing 2 and check for Withdraw option.",Pending offer on Listing 1 changes to Withdrawn and fires 'offer_withdrawn'; accepted offer on Listing 2 cannot be withdrawn.,P1,Functional,Make an Offer - Withdrawal (§3.5)
+TC-011,"Seller offer inbox badge count and sorting order (highest amount first, earliest tie-breaker)","Listing has 3 pending offers: Buyer A ($70 at 10:00 AM), Buyer B ($90 at 10:05 AM), Buyer C ($90 at 10:02 AM), plus 1 declined offer.","1. View the listing page as the seller.
+2. Open the 'Offers (3)' inbox.","Badge displays 'Offers (3)' (excluding declined offer). Inbox lists offers in order: Buyer C ($90, 10:02 AM), Buyer B ($90, 10:05 AM), Buyer A ($70, 10:00 AM).",P1,Functional,Make an Offer - Seller offer inbox (§3.6)

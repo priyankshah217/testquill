@@ -63,8 +63,14 @@ class GeminiProvider:
         top_p: float | None = None,
     ):
         from google import genai
+        from google.genai import types
 
-        self.client = genai.Client(api_key=api_key)
+        # google-genai >= 3 defaults to the v1 API, which rejects
+        # system_instruction ("Developer instruction is not enabled for api
+        # version v1"). Every testquill call sends one, so pin v1beta.
+        self.client = genai.Client(
+            api_key=api_key, http_options=types.HttpOptions(api_version="v1beta")
+        )
         self.model = model or DEFAULT_MODELS["gemini"]
         self.temperature = temperature
         self.top_p = top_p
