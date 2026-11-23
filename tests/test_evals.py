@@ -96,6 +96,28 @@ class TestComputeMetrics:
         assert m["recall"] == 0.0
         assert m["missed_reference_checks"] == ["R01", "R02", "R03", "R04"]
 
+    def test_gaps_flagged_needs_a_real_question(self):
+        qs = [{"id": "Q-01", "kind": "gap", "section": "", "question": "?"}]
+        flagged = self._verdicts(
+            traps=[{"id": "T01", "flagged": True, "question_ids": ["Q-01"]}]
+        )
+        m = judge.compute_metrics(CHECKS, GENERATED, flagged, qs)
+        assert m["gaps_flagged"] == 1.0
+        assert m["traps_flagged"] == ["T01"]
+        assert m["n_open_questions"] == 1
+        # Judge cites a question the generator never asked: not trusted.
+        bogus = self._verdicts(
+            traps=[{"id": "T01", "flagged": True, "question_ids": ["Q-09"]}]
+        )
+        assert (
+            judge.compute_metrics(CHECKS, GENERATED, bogus, qs)["gaps_flagged"] == 0.0
+        )
+        # Old grades without trap verdicts or questions score 0, not crash.
+        assert (
+            judge.compute_metrics(CHECKS, GENERATED, self._verdicts())["gaps_flagged"]
+            == 0.0
+        )
+
     def test_unknown_trap_ids_and_unclassified_cases(self):
         v = self._verdicts(generated_cases=[_gen("TC-001", "unsupported", ["T99"])])
         m = judge.compute_metrics(CHECKS, GENERATED, v)
@@ -151,6 +173,7 @@ class TestValidate:
                 "reference_checks": [_cov("R01", True, ["TC-001"])],
                 "checklist_items": [],
                 "generated_cases": [_gen("TC-001", "covers_check")],
+                "traps": [{"id": "T01", "flagged": True, "question_ids": ["Q-01"]}],
             },
             self.SCHEMA,
         )
@@ -160,6 +183,7 @@ class TestValidate:
             "reference_checks": [],
             "checklist_items": [],
             "generated_cases": [_gen("TC-001", "great")],
+            "traps": [],
         }
         with pytest.raises(judge.JudgeError, match="not in"):
             judge.validate(bad_enum, self.SCHEMA)
@@ -171,6 +195,7 @@ class TestValidate:
                     "reference_checks": [_cov("R01", "yes", [])],
                     "checklist_items": [],
                     "generated_cases": [],
+                    "traps": [],
                 },
                 self.SCHEMA,
             )

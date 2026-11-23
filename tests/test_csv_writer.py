@@ -5,7 +5,7 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from testquill.csv_writer import write_csv
+from testquill.csv_writer import write_csv, write_questions
 
 
 class TestWriteCsv:
@@ -104,3 +104,23 @@ class TestWriteCsv:
             reader = csv.DictReader(f)
             row = next(reader)
         assert row["custom_field"] == "extra value"
+
+
+def test_write_questions_markdown(tmp_path):
+    out = tmp_path / "sub" / "suite-questions.md"
+    write_questions(
+        [
+            {
+                "id": "Q-01",
+                "kind": "contradiction",
+                "section": "§1 vs §4",
+                "question": "$500 or $300?",
+            },
+            {"id": "Q-02", "kind": "gap", "section": "", "question": "Bump duration?"},
+        ],
+        out,
+    )
+    text = out.read_text(encoding="utf-8")
+    assert text.startswith("# Open questions")
+    assert "- **Q-01 · Contradiction — §1 vs §4:** $500 or $300?" in text
+    assert "- **Q-02 · Gap:** Bump duration?" in text

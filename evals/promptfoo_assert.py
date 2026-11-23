@@ -30,7 +30,12 @@ def get_assert(output: str, context: dict) -> dict:
         raise ValueError(
             f"Judge model {target[1]} is also the generator; pick another."
         )
-    graded = judge.grade(EVALS_DIR / "cases" / case, result["test_cases"], target)
+    graded = judge.grade(
+        EVALS_DIR / "cases" / case,
+        result["test_cases"],
+        target,
+        open_questions=result.get("open_questions", []),
+    )
     m = graded["metrics"]
 
     record = {
@@ -41,6 +46,7 @@ def get_assert(output: str, context: dict) -> dict:
         "generator": result["generator"],
         "pipeline": result["pipeline"],
         "test_cases": result["test_cases"],
+        "open_questions": result.get("open_questions", []),
         **graded,
     }
     run_id = os.environ.get("EVAL_RUN_ID", "adhoc")
@@ -58,12 +64,14 @@ def get_assert(output: str, context: dict) -> dict:
         "score": m["recall"],
         "reason": (
             f"recall {m['recall']:.0%}, checklist {m['checklist_coverage']:.0%}, "
-            f"unsupported {m['unsupported_rate']:.0%}, traps {m['trap_hits'] or 'none'}"
+            f"unsupported {m['unsupported_rate']:.0%}, traps {m['trap_hits'] or 'none'}, "
+            f"gaps flagged {m['gaps_flagged'] or 0:.0%}"
         ),
         "namedScores": {
             "recall": m["recall"],
             "checklist_coverage": m["checklist_coverage"],
             "unsupported_rate": m["unsupported_rate"],
             "redundant_rate": m["redundant_rate"],
+            "gaps_flagged": m["gaps_flagged"] or 0,
         },
     }

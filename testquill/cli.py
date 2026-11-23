@@ -11,7 +11,7 @@ import typer
 from dotenv import load_dotenv
 from rich.console import Console
 
-from .csv_writer import write_csv
+from .csv_writer import write_csv, write_questions
 from .generator import generate_test_cases, review_and_fix
 from .interview import run_interview
 from .loaders import build_context
@@ -155,7 +155,7 @@ def generate(
 
     console.print(f"[cyan]Generating test cases via {llm.name} ({llm.model})...[/cyan]")
     try:
-        rows, suggested = generate_test_cases(
+        rows, suggested, questions = generate_test_cases(
             context,
             provider=llm,
             system_prompt=system_prompt,
@@ -206,6 +206,21 @@ def generate(
 
     count = write_csv(rows, out, extra_columns=trace)
     console.print(f"[green]Wrote {count} test case(s) to[/green] {out}")
+
+    if questions:
+        q_path = out.with_name(f"{out.stem}-questions.md")
+        write_questions(questions, q_path)
+        console.print(
+            f"\n[yellow]{len(questions)} open question(s) for the product owner[/yellow] "
+            "(no test asserts a guessed answer):"
+        )
+        for q in questions:
+            label = "Contradiction" if q["kind"] == "contradiction" else "Gap"
+            where = f" ({q['section']})" if q["section"] else ""
+            console.print(
+                f"  [yellow]⚠ {q['id']} {label}{where}:[/yellow] {q['question']}"
+            )
+        console.print(f"[green]Wrote open questions to[/green] {q_path}")
 
 
 _SLUG_RE = re.compile(r"[^a-z0-9]+")

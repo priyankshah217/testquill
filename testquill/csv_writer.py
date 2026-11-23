@@ -56,3 +56,20 @@ def _stringify(value) -> str:
     if isinstance(value, list):
         return " | ".join(str(v) for v in value)
     return str(value)
+
+
+def write_questions(questions: list[dict], out_path: Path) -> None:
+    """Write open questions (PRD gaps and contradictions) as Markdown."""
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    lines = [
+        "# Open questions",
+        "",
+        "The source left these unclear or contradictory. No generated test",
+        "asserts an answer to them; add tests once they are resolved.",
+        "",
+    ]
+    for q in questions:
+        label = "Contradiction" if q["kind"] == "contradiction" else "Gap"
+        where = f" — {q['section']}" if q.get("section") else ""
+        lines.append(f"- **{q['id']} · {label}{where}:** {q['question']}")
+    out_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
