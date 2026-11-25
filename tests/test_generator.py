@@ -163,6 +163,7 @@ class TestParseResponse:
         contract = _build_output_contract("steps")
         assert '"open_questions"' in contract
         assert "NEVER guess" in contract
+        assert "REQUIRED IS NOT VALIDATED" in contract
         assert '"open_questions"' in _build_output_contract("bdd")
 
     def test_invalid_json_raises(self):

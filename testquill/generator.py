@@ -68,6 +68,11 @@ Gaps and contradictions — flag them, NEVER guess:
   just below) assert that value, so they are forbidden too. Where a test needs
   some value, pick one that gives the same result under every reading (for
   conflicting caps of 300 and 500, use 100 for "allowed" and 600 for "blocked").
+- REQUIRED IS NOT VALIDATED: a field marked required only means an EMPTY value
+  is blocked. Unless the context states a format rule for that field, write
+  no test that rejects a malformed value (an email without "@", letters in a
+  phone number) — this applies to email too, however obvious it seems. Test
+  the empty case, and raise the field's format rules as an open question.
 - Keep testing everything around the gap or contradiction that IS stated.
 - Only raise questions whose answer changes what a test asserts. Do not ask
   about things outside the feature under test.
