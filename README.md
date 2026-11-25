@@ -259,6 +259,22 @@ When `--trace` is enabled, additional source traceability columns are appended:
 
 By default the filename is suggested by the LLM based on the feature context; pass `-o` to override.
 
+### Open questions (gaps and contradictions)
+
+When the source contradicts itself or leaves out behaviour a test would need,
+testquill does **not** guess. It writes no test that asserts either side, picks
+test values that hold under every reading, and lists the issue as an open
+question for the product owner. Questions are printed after generation and saved
+next to the CSV as `<name>-questions.md`:
+
+```
+- **Q-01 · Contradiction — §1 vs §4:** Section 1 caps guest orders at $500 but
+  Section 4 says $300. Which is the correct limit?
+- **Q-02 · Gap — §3:** What format rules apply to the phone number field?
+```
+
+No file is written when there are no open questions.
+
 ### Step formats
 
 | `--format` | Steps column example |

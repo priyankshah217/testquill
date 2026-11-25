@@ -52,6 +52,33 @@ def _build_output_contract(fmt: str = "steps", trace: bool = False) -> str:
 - "test_cases": a JSON array where each element is an object with AT LEAST these keys:
 {json.dumps(CSV_COLUMNS)}
 (Additional keys are allowed and will be preserved in the JSON but omitted from the CSV.)
+- "open_questions": a JSON array (empty if there are none) of questions for the
+  product owner, each an object with EXACTLY these keys:
+  "id" ("Q-01", "Q-02", ...), "kind" ("gap" or "contradiction"),
+  "section" (where in the context it arises), "question" (one specific question).
+
+Gaps and contradictions — flag them, NEVER guess:
+- CONTRADICTION: two parts of the context state different values or behaviour
+  for the same thing. Do NOT pick one. Add an open question that quotes both,
+  and write NO test case that asserts either value.
+- GAP: a test would need behaviour the context does not state (what happens
+  when X, exact limits, durations, formats, edge-case outcomes). Do NOT assume
+  it. Add an open question, and write NO test case that asserts a guessed outcome.
+- Boundary tests AT a disputed or unstated value (exactly at it, just above,
+  just below) assert that value, so they are forbidden too. Where a test needs
+  some value, pick one that gives the same result under every reading (for
+  conflicting caps of 300 and 500, use 100 for "allowed" and 600 for "blocked").
+- REQUIRED IS NOT VALIDATED: a field marked required only means an EMPTY value
+  is blocked. Unless the context states a format rule for that field, write
+  no test that rejects a malformed value (an email without "@", letters in a
+  phone number) — this applies to email too, however obvious it seems. Test
+  the empty case, and raise the field's format rules as an open question.
+- Keep testing everything around the gap or contradiction that IS stated.
+- Only raise questions whose answer changes what a test asserts. Do not ask
+  about things outside the feature under test.
+- FLAG-CHECK before output: for every open question, scan Preconditions,
+  Steps and Expected Result of every test case. Delete or rewrite any test
+  case that depends on that question's answer.
 
 Field guidance for each test case:
 - ID: "TC-001", "TC-002", ... sequential.
@@ -165,7 +192,8 @@ def generate_test_cases(
     max_tokens: int = 16384,
     trace: bool = False,
     debug: bool = False,
-) -> tuple[list[dict], str | None]:
+) -> tuple[list[dict], str | None, list[dict]]:
+    """Returns (rows, suggested_filename, open_questions) from one completion."""
     provider = provider or get_provider()
     system = build_system_prompt(
         system_prompt, append=append_system, fmt=fmt, trace=trace
@@ -177,10 +205,39 @@ def generate_test_cases(
 
         Path("debug_response.txt").write_text(text or "", encoding="utf-8")
         Path("debug_system_prompt.txt").write_text(system, encoding="utf-8")
-    return _parse_response(text)
+    return _parse_payload(text)
 
 
 def _parse_response(text: str) -> tuple[list[dict], str | None]:
+    rows, name, _ = _parse_payload(text)
+    return rows, name
+
+
+_QUESTION_KINDS = ("gap", "contradiction")
+
+
+def _clean_questions(raw: object) -> list[dict]:
+    """Keep well-formed open questions; drop anything malformed."""
+    if not isinstance(raw, list):
+        return []
+    out = []
+    for q in raw:
+        if not isinstance(q, dict) or not str(q.get("question", "")).strip():
+            continue
+        kind = str(q.get("kind", "")).strip().lower()
+        out.append(
+            {
+                "id": str(q.get("id") or f"Q-{len(out) + 1:02d}"),
+                "kind": kind if kind in _QUESTION_KINDS else "gap",
+                "section": str(q.get("section", "")).strip(),
+                "question": str(q["question"]).strip(),
+            }
+        )
+    return out
+
+
+def _parse_payload(text: str) -> tuple[list[dict], str | None, list[dict]]:
+    """Parse the model's JSON into (rows, suggested_filename, open_questions)."""
     text = text.strip()
     # Strip accidental code fences.
     fence = re.match(r"^```(?:json)?\s*(.*?)\s*```$", text, re.DOTALL)
@@ -218,11 +275,15 @@ def _parse_response(text: str) -> tuple[list[dict], str | None]:
         if not isinstance(rows, list):
             raise ValueError("Model response missing 'test_cases' array")
         name = data.get("suggested_filename")
-        return rows, name if isinstance(name, str) and name.strip() else None
+        return (
+            rows,
+            name if isinstance(name, str) and name.strip() else None,
+            _clean_questions(data.get("open_questions")),
+        )
 
     # Bare array
     if isinstance(data, list):
-        return data, None
+        return data, None, []
 
     raise ValueError("Model did not return a JSON array or object")
 

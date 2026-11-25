@@ -24,7 +24,7 @@ testquill/
 │   └── figma.py     FigmaSource (stdlib HTTP, node tree → text, text-only v1)
 ├── interview.py     Adaptive clarification loop (one-at-a-time, LLM-gated)
 ├── generator.py     Builds prompts, calls the provider, parses JSON response
-│                    (returns tuple: (rows, suggested_filename))
+│                    (returns tuple: (rows, suggested_filename, open_questions))
 │                    Supports --format (steps | bdd) via _build_output_contract()
 │                    LLM-as-judge: judge_and_fix() sends quality warnings back
 │                    to the LLM for correction (single retry, no loop)
@@ -49,9 +49,13 @@ testquill/
   `FigmaSource` use `urllib.request`. Do NOT add `requests` or `httpx`
   for new sources unless there is a concrete need — keeping deps minimal
   is a goal.
-- **Generator returns `(rows, suggested_filename)`.** The LLM emits both
-  in a single completion so naming is free (no extra API call). The CLI
-  slugifies and handles collisions with `_2`, `_3` suffixes.
+- **Generator returns `(rows, suggested_filename, open_questions)`.** The LLM
+  emits all three in a single completion (no extra API call). The CLI
+  slugifies the filename and handles collisions with `_2`, `_3` suffixes, and
+  writes open questions to `<name>-questions.md`.
+- **Flag, never guess.** The output contract tells the model to raise PRD gaps
+  and contradictions as `open_questions` and to write no test that asserts a
+  guessed or disputed answer. `evals/` measures this (`gaps_flagged`, trap hits).
 - **Interview is adaptive, not batched.** The model decides per turn
   whether another clarifying question is needed; simple prompts get zero
   questions, dense specs get more (hard-capped at 5 turns).

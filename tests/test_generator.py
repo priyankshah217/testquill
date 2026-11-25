@@ -9,6 +9,7 @@ import pytest
 from testquill.generator import (
     _build_judge_prompt,
     _build_output_contract,
+    _parse_payload,
     _parse_response,
     build_system_prompt,
     build_user_prompt,
@@ -123,6 +124,47 @@ class TestParseResponse:
         response = 'Here are the cases:\n[{"ID": "TC-001", "Title": "T"}]\nDone.'
         rows, name = _parse_response(response)
         assert len(rows) == 1
+
+    def test_open_questions_parsed_and_cleaned(self):
+        response = json.dumps(
+            {
+                "suggested_filename": "checkout",
+                "test_cases": [{"ID": "TC-001", "Title": "T"}],
+                "open_questions": [
+                    {
+                        "id": "Q-01",
+                        "kind": "contradiction",
+                        "section": "§1 vs §4",
+                        "question": "Is the cap $500 or $300?",
+                    },
+                    {"kind": "weird", "question": "  Duration of a bump?  "},
+                    {"id": "Q-03", "question": ""},  # empty: dropped
+                    "not an object",  # dropped
+                ],
+            }
+        )
+        rows, name, questions = _parse_payload(response)
+        assert name == "checkout" and len(rows) == 1
+        assert [q["id"] for q in questions] == ["Q-01", "Q-02"]
+        assert questions[0]["kind"] == "contradiction"
+        assert questions[1] == {
+            "id": "Q-02",
+            "kind": "gap",
+            "section": "",
+            "question": "Duration of a bump?",
+        }
+
+    def test_open_questions_default_empty(self):
+        response = json.dumps({"test_cases": [{"ID": "TC-001"}]})
+        assert _parse_payload(response)[2] == []
+        assert _parse_payload('[{"ID": "TC-001"}]')[2] == []
+
+    def test_contract_requires_flagging_not_guessing(self):
+        contract = _build_output_contract("steps")
+        assert '"open_questions"' in contract
+        assert "NEVER guess" in contract
+        assert "REQUIRED IS NOT VALIDATED" in contract
+        assert '"open_questions"' in _build_output_contract("bdd")
 
     def test_invalid_json_raises(self):
         with pytest.raises((json.JSONDecodeError, ValueError)):

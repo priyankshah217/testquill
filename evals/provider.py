@@ -16,6 +16,7 @@ Provider config (promptfooconfig.yaml -> providers[].config), all optional:
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -25,6 +26,10 @@ from testquill.loaders import build_context
 from testquill.providers import get_provider
 
 EVALS_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(EVALS_DIR))
+
+from judge import RetryingProvider  # noqa: E402
+
 REPO_DIR = EVALS_DIR.parent
 load_dotenv(REPO_DIR / ".env")
 
@@ -47,8 +52,10 @@ def run_case(case: str, input_mode: str = "file", config: dict | None = None) ->
             encoding="utf-8"
         )
 
-    llm = get_provider(config.get("provider"), model=config.get("model"))
-    rows, suggested = generate_test_cases(
+    llm = RetryingProvider(
+        get_provider(config.get("provider"), model=config.get("model"))
+    )
+    rows, suggested, questions = generate_test_cases(
         context,
         provider=llm,
         system_prompt=system_prompt,
@@ -66,6 +73,7 @@ def run_case(case: str, input_mode: str = "file", config: dict | None = None) ->
             "judge_and_fix_error": review.judge_error,
         },
         "test_cases": review.rows,
+        "open_questions": questions,
     }
 
 

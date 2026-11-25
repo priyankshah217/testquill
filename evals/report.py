@@ -24,6 +24,7 @@ THRESHOLDS = {
     "recall": ("higher", 0.05),
     "checklist_coverage": ("higher", 0.05),
     "unsupported_rate": ("lower", 0.05),
+    "gaps_flagged": ("higher", 0.10),
 }
 TRACKED = [
     "recall",
@@ -32,6 +33,7 @@ TRACKED = [
     "redundant_rate",
     "generic_nfr_rate",
     "p0_agreement",
+    "gaps_flagged",
 ]
 
 
@@ -62,7 +64,8 @@ def summarize(records: list[dict]) -> dict:
     for case, recs in sorted(by_case.items()):
         row: dict = {"runs": len(recs)}
         for k in TRACKED:
-            vals = [r["metrics"][k] for r in recs if r["metrics"][k] is not None]
+            # .get: grades made before a metric existed simply lack it.
+            vals = [r["metrics"][k] for r in recs if r["metrics"].get(k) is not None]
             row[k] = {
                 "mean": round(statistics.mean(vals), 4) if vals else None,
                 "min": round(min(vals), 4) if vals else None,
@@ -115,7 +118,7 @@ def print_report(run_id: str, s: dict, baseline: dict | None) -> None:
         f"\nRun {run_id}  generator={', '.join(s['generators'])}  judge={', '.join(s['judges'])}"
     )
     print(
-        f"{'case':24} {'runs':>4} {'recall':>13} {'checklist':>13} {'unsupp':>6} {'redund':>6} {'nfr':>6} {'P0agr':>6}  traps"
+        f"{'case':24} {'runs':>4} {'recall':>13} {'checklist':>13} {'unsupp':>6} {'redund':>6} {'nfr':>6} {'P0agr':>6} {'flagd':>6}  traps hit"
     )
     for case, c in s["cases"].items():
         print(
@@ -123,12 +126,12 @@ def print_report(run_id: str, s: dict, baseline: dict | None) -> None:
             f"{_pct(c['recall']['mean'])} (min{_pct(c['recall']['min'])}) "
             f"{_pct(c['checklist_coverage']['mean'])} (min{_pct(c['checklist_coverage']['min'])}) "
             f"{_pct(c['unsupported_rate']['mean']):>6} {_pct(c['redundant_rate']['mean']):>6} {_pct(c['generic_nfr_rate']['mean']):>6} "
-            f"{_pct(c['p0_agreement']['mean']):>6}  {', '.join(c['trap_hits']) or '-'}"
+            f"{_pct(c['p0_agreement']['mean']):>6} {_pct(c['gaps_flagged']['mean']):>6}  {', '.join(c['trap_hits']) or '-'}"
         )
     o = s["overall"]
     print(
         f"{'OVERALL':24}      {_pct(o['recall'])}         {_pct(o['checklist_coverage'])}"
-        f"         {_pct(o['unsupported_rate']):>6} {_pct(o['redundant_rate']):>6} {_pct(o['generic_nfr_rate']):>6} {_pct(o['p0_agreement']):>6}"
+        f"         {_pct(o['unsupported_rate']):>6} {_pct(o['redundant_rate']):>6} {_pct(o['generic_nfr_rate']):>6} {_pct(o['p0_agreement']):>6} {_pct(o['gaps_flagged']):>6}"
     )
     if s["judge_and_fix_errors"]:
         print(

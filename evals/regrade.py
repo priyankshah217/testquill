@@ -44,7 +44,10 @@ def main() -> int:
         if target[1] == rec["generator"]["model"]:
             raise ValueError(f"Judge model {target[1]} is also the generator.")
         graded = judge.grade(
-            EVALS_DIR / "cases" / rec["case"], rec["test_cases"], target
+            EVALS_DIR / "cases" / rec["case"],
+            rec["test_cases"],
+            target,
+            open_questions=rec.get("open_questions", []),
         )
         rec.update(graded)
         out.write_text(json.dumps(rec, indent=2), encoding="utf-8")

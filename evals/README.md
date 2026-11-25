@@ -108,6 +108,9 @@ Gemini) makes calibration mandatory.
   ask for) > Redundant (repeats an earlier generated case) > Covers check
   (matches the human answer key; checklist-only matches don't count) > Valid
   extra (PRD-supported, not in the key).
+- **Gaps flagged**: share of each PRD's planted traps that testquill raised as
+  an open question (`open_questions`) instead of guessing. A trap can be both
+  flagged and hit if a test still asserts an answer; only hits fail a run.
 - **Priority**: scored only as P0 vs not-P0. **Type is not scored** (the human
   key uses its own taxonomy).
 - **Calibration**: a human grades a 40-case sample with the same rubric; the
